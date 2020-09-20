@@ -29,11 +29,9 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
-
     this.doSubmit();
   };
 
@@ -44,14 +42,16 @@ class Form extends Component {
     else delete errors[input.name];
 
     const data = { ...this.state.data };
+
     data[input.name] = input.value;
+
     this.setState({ data, errors });
   };
 
   renderButton(label) {
     return (
       <button disabled={this.validate()} className="btn btn-primary">
-        {label}
+      {label}
       </button>
     );
   }
@@ -60,27 +60,28 @@ class Form extends Component {
     const { data, errors } = this.state;
     return (
       <Input
-        type={type}
-        name={name}
-        value={data[name]}
-        label={label}
-        onChange={this.handleChange}
-        error={errors[name]}
+      type={type}
+      name={name}
+      value={data[name]}
+      label={label}
+      onChange={this.handleChange}
+      error={errors[name]}
       />
     );
   }
+
 
   renderSelect(name, label, options) {
     const { data, errors } = this.state;
 
     return (
       <Select
-        name={name}
-        value={data[name]}
-        label={label}
-        options={options}
-        onChange={this.handleChange}
-        error={errors[name]}
+      name={name}
+      value={data[name]}
+      label={label}
+      options={options}
+      onChange={this.handleChange}
+      error={errors[name]}
       />
     );
   }

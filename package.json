@@ -2,7 +2,7 @@
   "name": "vidly-react",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:8080/api",
+  "proxy": "http://localhost:8080/api",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",

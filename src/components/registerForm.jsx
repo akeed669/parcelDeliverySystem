@@ -10,23 +10,27 @@ class RegisterForm extends Form {
       username: "",
       password: "",
       name: "",
-      accountType: "",
+      phoneNumber: "",
     },
     errors: {},
-    aTypes: ["a", "b"],
+    utypes:['dfdf','dff']
   };
+
 
   schema = {
     username: Joi.string().required().email().label("Username"),
     password: Joi.string().required().min(5).label("Password"),
     name: Joi.string().required().label("Name"),
-    accountType: Joi.string().required().label("Account Type"),
+    phoneNumber: Joi.string().required().max(10).label("Phone Number"),
+
   };
 
   doSubmit = async () => {
     try {
       const response = await userService.register(this.state.data);
-      auth.loginWithJwt(response.headers["x-auth-token"]);
+      console.log(response.data)
+      //auth.loginWithJwt(response.headers["x-auth-token"]);
+      auth.loginWithJwt(response.data.fullname);
       window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -37,20 +41,21 @@ class RegisterForm extends Form {
     }
   };
 
+
   render() {
     return (
       <div>
-        <h1>Register</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderInput("name", "Name")}
-          {this.renderSelect("accountType", "Account Type", this.state.aTypes)}
-          {this.renderButton("Register")}
-        </form>
+      <h1>Register</h1>
+      <form onSubmit={this.handleSubmit}>
+      {this.renderInput("username", "Username")}
+      {this.renderInput("password", "Password", "password")}
+      {this.renderInput("name", "Name")}
+      {this.renderInput("phoneNumber", "Phone Number")}
+      {this.renderButton("Register")}
+      </form>
       </div>
     );
   }
 }
-
+//<form onSubmit={this.handleSubmit}>
 export default RegisterForm;

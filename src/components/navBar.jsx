@@ -42,7 +42,7 @@ const NavBar = ({ user }) => {
                 Rentals
               </NavLink> */}
               <NavLink className="nav-item nav-link" to="/profile">
-                {user.name}
+                {user}
               </NavLink>
               <NavLink className="nav-item nav-link" to="/logout">
                 Logout
