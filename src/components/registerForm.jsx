@@ -13,7 +13,6 @@ class RegisterForm extends Form {
       phoneNumber: "",
     },
     errors: {},
-    utypes:['dfdf','dff']
   };
 
 
@@ -22,7 +21,7 @@ class RegisterForm extends Form {
     password: Joi.string().required().min(5).label("Password"),
     name: Joi.string().required().label("Name"),
     phoneNumber: Joi.string().required().max(10).label("Phone Number"),
-
+    uType:Joi.string().required().max(8).label("User Type"),
   };
 
   doSubmit = async () => {
@@ -30,7 +29,7 @@ class RegisterForm extends Form {
       const response = await userService.register(this.state.data);
       console.log(response.data)
       //auth.loginWithJwt(response.headers["x-auth-token"]);
-      auth.loginWithJwt(response.data.fullname);
+      auth.loginWithJwt(response.data);
       window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -51,6 +50,7 @@ class RegisterForm extends Form {
       {this.renderInput("password", "Password", "password")}
       {this.renderInput("name", "Name")}
       {this.renderInput("phoneNumber", "Phone Number")}
+      {this.renderSelect("uType", "User Type",[{_id:"customer",name:"Customer"},{_id:"driver",name:"Driver"}])}
       {this.renderButton("Register")}
       </form>
       </div>

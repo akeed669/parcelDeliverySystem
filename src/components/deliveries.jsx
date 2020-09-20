@@ -10,7 +10,7 @@ import { getGenres } from "../services/genreService";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 
-class DeliveryOrders extends Component {
+class Deliveries extends Component {
   state = {
     orders: [],
     currentPage: 1,
@@ -132,4 +132,4 @@ class DeliveryOrders extends Component {
   }
 }
 
-export default DeliveryOrders;
+export default Deliveries;

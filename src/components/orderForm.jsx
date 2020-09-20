@@ -2,35 +2,27 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { getOrders, saveOrder } from "../services/orderService";
-import { getGenres } from "../services/genreService";
 
 class OrderForm extends Form {
+
   state = {
-    data: { title: "", genreId: "", numberInStock: "", dailyRentalRate: "" },
-    genres: [],
-    errors: {},
+    data: { address: "", destination: "", weight: "", description: ""},
+    errors: {}
   };
 
   schema = {
     _id: Joi.string(),
-    title: Joi.string().required().label("Title"),
-    genreId: Joi.string().required().label("Genre"),
-    numberInStock: Joi.number()
+    address: Joi.string().required().label("Address"),
+    destination: Joi.string().required().label("Destination"),
+    description: Joi.string().required().label("Description"),
+    parcelOwner:Joi.string(),
+    parcelState:Joi.number(),
+    weight: Joi.number()
       .required()
       .min(0)
       .max(100)
-      .label("Number In Stock"),
-    dailyRentalRate: Joi.number()
-      .required()
-      .min(0)
-      .max(10)
-      .label("Daily Rental Rate"),
+      .label("Parcel weight")
   };
-
-  async populateGenres() {
-    const { data: genres } = await getGenres();
-    this.setState({ genres });
-  }
 
   async populateMovie() {
     try {
@@ -46,8 +38,15 @@ class OrderForm extends Form {
   }
 
   async componentDidMount() {
-    await this.populateGenres();
     await this.populateMovie();
+    const { email } = this.props;
+
+    let data = { ...this.state.data };
+    data.parcelOwner=email;
+    data.parcelState=0
+
+    //this.setState({parcelOwner:email, parcelState:3});
+    this.setState({data});
   }
 
   mapToViewModel(movie) {
@@ -61,20 +60,21 @@ class OrderForm extends Form {
   }
 
   doSubmit = async () => {
+    console.log(this.state.data)
     await saveOrder(this.state.data);
-
     this.props.history.push("/orders");
   };
 
   render() {
+
     return (
       <div>
         <h1>Order Form</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("title", "Title")}
-          {this.renderSelect("genreId", "Genre", this.state.genres)}
-          {this.renderInput("numberInStock", "Number In Stock", "number")}
-          {this.renderInput("dailyRentalRate", "Rate")}
+          {this.renderInput("address", "Address")}
+          {this.renderInput("destination", "Destination")}
+          {this.renderInput("weight", "Weight")}
+          {this.renderInput("description", "Description")}
           {this.renderButton("Save")}
         </form>
       </div>

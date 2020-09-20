@@ -16,17 +16,18 @@ class LoginForm extends Form {
       .label("Username"),
     password: Joi.string()
       .required()
-      .label("Password")
+      .label("Password"),
+    uType:Joi.string().required().max(8).label("User Type"),
   };
 
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      await auth.login(data.username, data.password);
+      await auth.login(data.username, data.password, data.uType);
 
       const { state } = this.props.location;
       window.location = state ? state.from.pathname : "/";
-            
+
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -42,6 +43,7 @@ class LoginForm extends Form {
       <div>
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
+          {this.renderSelect("uType", "User Type",[{_id:"customer",name:"Customer"},{_id:"driver",name:"Driver"}])}
           {this.renderInput("username", "Username")}
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Login")}

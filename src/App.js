@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import DeliveryOrders from "./components/deliveryOrders";
-import MovieForm from "./components/orderForm";
+import Deliveries from "./components/deliveries";
+import OrderForm from "./components/orderForm";
 import Customers from "./components/customers";
 import NotFound from "./components/notFound";
 import NavBar from "./components/navBar";
@@ -18,33 +18,47 @@ import "./App.css";
 import ProtectedRoute from "./components/common/protectedRoute";
 
 class App extends Component {
-  state = {};
+  state = {
+
+  };
 
   componentDidMount() {
-    const user = auth.getCurrentUser();
-    this.setState({ user });
+    const userObjectString = auth.getCurrentUser();
+    // if(userObjectString !== null){
+    //   const user=JSON.parse(userObjectString);
+    //   const fullname=user.fullname;
+    //   const email=user.email;
+    //   this.setState({ user, fullname, email });
+    // }
+
   }
 
   render() {
-    const { user } = this.state;
+    //const { user, fullname, email } = this.state;
 
     return (
       <React.Fragment>
         <ToastContainer />
-        <NavBar user={user} />
+        <NavBar user={fullname} />
         <main className="container">
           <Switch>
             <Route path="/register" component={RegisterForm} />
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />
-            <ProtectedRoute path="/movies/:id" component={MovieForm} />
-            <Route
-              path="/orders"
-              render={(props) => <DeliveryOrders {...props} user={user} />}
+
+            <ProtectedRoute
+            path="/orders/:id"
+            render={(props) => <OrderForm {...props} email={email} />}
             />
+
+            <Route
+              path="/deliveries"
+              render={(props) => <Deliveries {...props} user={fullname} />}
+            />
+
             <Route path="/customers" component={Customers} />
             <Route path="/not-found" component={NotFound} />
-            <Redirect from="/" exact to="/movies" />
+            <Redirect from="/" exact to="/deliveries" />
             <Redirect to="/not-found" />
           </Switch>
         </main>
