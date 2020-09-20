@@ -19,22 +19,26 @@ import ProtectedRoute from "./components/common/protectedRoute";
 
 class App extends Component {
   state = {
-
+    fullname:"",
+    email:""
   };
 
   componentDidMount() {
     const userObjectString = auth.getCurrentUser();
-    // if(userObjectString !== null){
+    console.log("ponsi" + userObjectString)
+    // if(userObjectString != null){
+    //   console.log(userObjectString)
     //   const user=JSON.parse(userObjectString);
     //   const fullname=user.fullname;
     //   const email=user.email;
-    //   this.setState({ user, fullname, email });
+    //   this.setState({ user, fullname:fullname, email:email });
     // }
+    //this.setState({ user });
 
   }
 
   render() {
-    //const { user, fullname, email } = this.state;
+    const { user, fullname, email } = this.state;
 
     return (
       <React.Fragment>

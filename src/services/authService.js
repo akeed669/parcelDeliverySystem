@@ -8,7 +8,6 @@ const tokenKey = "token";
 http.setJwt(getJwt());
 
 export async function login(email, password, uType) {
-  console.log("her")
   if(uType==="customer"){
     apiEndpoint += "/clients/login";
   }
@@ -17,8 +16,10 @@ export async function login(email, password, uType) {
   }
 
   const response  = await http.post(apiEndpoint, { email, password });
+
   //console.log(JSON.stringify(response.data))
-  localStorage.setItem(tokenKey, response.data);
+
+  localStorage.setItem(tokenKey, response);
 }
 
 export function loginWithJwt(userObject) {
