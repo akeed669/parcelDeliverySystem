@@ -9,7 +9,7 @@ class OrdersTable extends Component {
       path: "address",
       label: "Address",
       content: (order) => (
-        <Link to={`/orders/${order._id}`}>{order.address}</Link>
+        <Link to={`/parcels/${order.id}`}>{order.address}</Link>
       ),
     },
     { path: "destination", label: "Destination" },
@@ -71,7 +71,7 @@ class OrdersTable extends Component {
 
   render() {
     const { orders, sortColumn, onSort } = this.props;
-    //console.log(orders)
+    console.log(orders)
     return (
       <Table
         columns={this.columns}

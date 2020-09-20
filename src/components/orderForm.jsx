@@ -29,8 +29,10 @@ class OrderForm extends Form {
       const orderId = this.props.match.params.id;
       if (orderId === "new") return;
 
-      const { data: movie } = await getOrders(orderId);
-      this.setState({ data: this.mapToViewModel(movie) });
+      const {data:order} = await getOrders(orderId);
+      //console.log(order)
+      this.setState({ data: this.mapToViewModel(order)});
+
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         this.props.history.replace("/not-found");
@@ -45,21 +47,22 @@ class OrderForm extends Form {
     data.owner=email;
     data.state=0
 
-    //this.setState({parcelOwner:email, parcelState:3});
+
     this.setState({data});
+    //this.setState({parcelOwner:email, parcelState:3});
   }
 
-  mapToViewModel(movie) {
+  mapToViewModel(order) {
     return {
-      _id: movie._id,
-      address: movie.address,
-      destination: movie.destination,
-      description: movie.description,
-      weight: movie.weight,
+      id: order.id,
+      address: order.address,
+      destination: order.destination,
+      description: order.description,
+      weight: order.weight,
     };
   }
 
-  doSubmit = async () => {    
+  doSubmit = async () => {
     await saveOrder(this.state.data);
     //this.props.history.push("/orders");
   };

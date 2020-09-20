@@ -52,7 +52,7 @@ class App extends Component {
       <Route path="/logout" component={Logout} />
 
       <ProtectedRoute
-      path="/orders/:id"
+      path="/parcels/:id"
       render={(props) => <OrderForm {...props} email={email} />}
       />
 
