@@ -25,25 +25,28 @@ class App extends Component {
 
   componentDidMount() {
     const userObjectString = auth.getCurrentUser();
-    console.log("ponsi" + userObjectString)
-    // if(userObjectString != null){
-    //   console.log(userObjectString)
-    //   const user=JSON.parse(userObjectString);
-    //   const fullname=user.fullname;
-    //   const email=user.email;
-    //   this.setState({ user, fullname:fullname, email:email });
-    // }
-    //this.setState({ user });
-
+    //console.log("ponsi" + userObjectString)
+    if(userObjectString !== null){
+      //console.log(typeof userObjectString)
+      const user=JSON.parse(userObjectString);
+      //console.log(typeof user)
+      const fullname=user.fullname;
+      const email=user.email;
+      //console.log(email + " " +fullname)
+      this.setState({fullname:fullname, email:email });
+      console.log(this.state)
+    }
+    this.setState({ userObjectString });
+    console.log(this.state)
   }
 
   render() {
-    const { user, fullname, email } = this.state;
+    const { userObjectString, fullname, email } = this.state;
 
     return (
       <React.Fragment>
         <ToastContainer />
-        <NavBar user={fullname} />
+        <NavBar user={userObjectString} />
         <main className="container">
           <Switch>
             <Route path="/register" component={RegisterForm} />
