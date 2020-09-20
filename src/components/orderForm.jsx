@@ -15,8 +15,8 @@ class OrderForm extends Form {
     address: Joi.string().required().label("Address"),
     destination: Joi.string().required().label("Destination"),
     description: Joi.string().required().label("Description"),
-    parcelOwner:Joi.string(),
-    parcelState:Joi.number(),
+    owner:Joi.string(),
+    state:Joi.number(),
     weight: Joi.number()
       .required()
       .min(0)
@@ -42,8 +42,8 @@ class OrderForm extends Form {
     const { email } = this.props;
 
     let data = { ...this.state.data };
-    data.parcelOwner=email;
-    data.parcelState=0
+    data.owner=email;
+    data.state=0
 
     //this.setState({parcelOwner:email, parcelState:3});
     this.setState({data});
@@ -62,7 +62,7 @@ class OrderForm extends Form {
   doSubmit = async () => {
     console.log(this.state.data)
     await saveOrder(this.state.data);
-    this.props.history.push("/orders");
+    //this.props.history.push("/orders");
   };
 
   render() {

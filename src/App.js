@@ -27,48 +27,46 @@ class App extends Component {
     const userObjectString = auth.getCurrentUser();
     //console.log("ponsi" + userObjectString)
     if(userObjectString !== null){
-      //console.log(typeof userObjectString)
+
       const user=JSON.parse(userObjectString);
-      //console.log(typeof user)
       const fullname=user.fullname;
       const email=user.email;
-      //console.log(email + " " +fullname)
+
       this.setState({fullname:fullname, email:email });
-      console.log(this.state)
     }
-    this.setState({ userObjectString });
-    console.log(this.state)
+    //this.setState({ userObjectString });
   }
 
   render() {
-    const { userObjectString, fullname, email } = this.state;
+
+    const { fullname, email } = this.state;
 
     return (
       <React.Fragment>
-        <ToastContainer />
-        <NavBar user={userObjectString} />
-        <main className="container">
-          <Switch>
-            <Route path="/register" component={RegisterForm} />
-            <Route path="/login" component={LoginForm} />
-            <Route path="/logout" component={Logout} />
+      <ToastContainer />
+      <NavBar user={fullname} />
+      <main className="container">
+      <Switch>
+      <Route path="/register" component={RegisterForm} />
+      <Route path="/login" component={LoginForm} />
+      <Route path="/logout" component={Logout} />
 
-            <ProtectedRoute
-            path="/orders/:id"
-            render={(props) => <OrderForm {...props} email={email} />}
-            />
+      <ProtectedRoute
+      path="/orders/:id"
+      render={(props) => <OrderForm {...props} email={email} />}
+      />
 
-            <Route
-              path="/deliveries"
-              render={(props) => <Deliveries {...props} user={fullname} />}
-            />
+      <Route
+      path="/deliveries"
+      render={(props) => <Deliveries {...props} user={fullname} />}
+      />
 
-            <Route path="/customers" component={Customers} />
-            <Route path="/not-found" component={NotFound} />
-            <Redirect from="/" exact to="/deliveries" />
-            <Redirect to="/not-found" />
-          </Switch>
-        </main>
+      <Route path="/customers" component={Customers} />
+      <Route path="/not-found" component={NotFound} />
+      <Redirect from="/" exact to="/deliveries" />
+      <Redirect to="/not-found" />
+      </Switch>
+      </main>
       </React.Fragment>
     );
   }
