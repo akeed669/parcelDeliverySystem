@@ -6,15 +6,15 @@ import Table from "./common/table";
 class OrdersTable extends Component {
   columns = [
     {
-      path: "title",
-      label: "Title",
+      path: "address",
+      label: "Address",
       content: (order) => (
-        <Link to={`/orders/${order._id}`}>{order.title}</Link>
+        <Link to={`/orders/${order._id}`}>{order.address}</Link>
       ),
     },
-    { path: "genre.name", label: "Genre" },
-    { path: "numberInStock", label: "Stock" },
-    { path: "dailyRentalRate", label: "Rate" },
+    { path: "destination", label: "Destination" },
+    { path: "description", label: "Description" },
+    { path: "weight", label: "Weight" },
 
     {
       content: (order) => (
@@ -39,38 +39,39 @@ class OrdersTable extends Component {
     },
   ];
 
-  // completedColumn = {
-  //   key: "completed",
-  //   content: (order) => (
-  //     <button
-  //       onClick={() => this.props.onDelete(order)}
-  //       className="btn btn-success btn-sm"
-  //     >
-  //       Completed
-  //     </button>
-  //   ),
-  // };
+  completedColumn = {
+    key: "completed",
+    content: (order) => (
+      <button
+        onClick={() => this.props.onDelete(order)}
+        className="btn btn-success btn-sm"
+      >
+        Completed
+      </button>
+    ),
+  };
 
-  // deleteColumn = {
-  //   key: "delete",
-  //   content: (order) => (
-  //     <button
-  //       onClick={() => this.props.onDelete(order)}
-  //       className="btn btn-danger btn-sm"
-  //     >
-  //       Delete
-  //     </button>
-  //   ),
-  // };
+  deleteColumn = {
+    key: "delete",
+    content: (order) => (
+      <button
+        onClick={() => this.props.onDelete(order)}
+        className="btn btn-danger btn-sm"
+      >
+        Delete
+      </button>
+    ),
+  };
 
   constructor() {
     super();
     const user = auth.getCurrentUser();
-    //if (user && user.isAdmin) this.columns.push(this.deleteColumn);
+    if (user && user.isAdmin) this.columns.push(this.deleteColumn);
   }
 
   render() {
     const { orders, sortColumn, onSort } = this.props;
+    //console.log(orders)
     return (
       <Table
         columns={this.columns}

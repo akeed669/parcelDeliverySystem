@@ -20,7 +20,7 @@ class TableHeader extends Component {
   };
 
   render() {
-    const { columns } = this.props;
+    const { columns } = this.props;    
     return (
       <thead>
         <tr>

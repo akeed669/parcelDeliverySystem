@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import ordersTable from "./ordersTable";
+import OrdersTable from "./OrdersTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import SearchBox from "./common/searchBox";
 import { getOrders, deleteOrder } from "../services/orderService";
-import { getGenres } from "../services/genreService";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 
@@ -25,6 +24,7 @@ class Deliveries extends Component {
 
     const { data: orders } = await getOrders();
     this.setState({ orders });
+
   }
 
   handleDelete = async (order) => {
@@ -99,6 +99,7 @@ class Deliveries extends Component {
     // if (count === 0) return <p>There are no orders in the database.</p>;
 
     const { totalCount, data: orders } = this.getPagedData();
+    //console.log(orders)
 
     return (
       <div className="row">
@@ -114,7 +115,7 @@ class Deliveries extends Component {
           )}
           <p>Showing {totalCount} orders in the database.</p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
-          <ordersTable
+          <OrdersTable
             orders={orders}
             sortColumn={sortColumn}
             onDelete={this.handleDelete}

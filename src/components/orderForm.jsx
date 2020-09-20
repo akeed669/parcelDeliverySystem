@@ -52,15 +52,14 @@ class OrderForm extends Form {
   mapToViewModel(movie) {
     return {
       _id: movie._id,
-      title: movie.title,
-      genreId: movie.genre._id,
-      numberInStock: movie.numberInStock,
-      dailyRentalRate: movie.dailyRentalRate,
+      address: movie.address,
+      destination: movie.destination,
+      description: movie.description,
+      weight: movie.weight,
     };
   }
 
-  doSubmit = async () => {
-    console.log(this.state.data)
+  doSubmit = async () => {    
     await saveOrder(this.state.data);
     //this.props.history.push("/orders");
   };
