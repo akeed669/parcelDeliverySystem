@@ -1,11 +1,3 @@
-// import client from "./client";
-//
-// const login = (email, password) => {return client.post("/drivers/login", { email, password });}
-//
-// export default {
-//   login,
-// };
-
 import client from "./client";
 
 let apiEndpoint = "";

@@ -10,24 +10,29 @@ import {
   ErrorMessage,
   Form,
   FormField,
+  FormPicker,
   SubmitButton,
 } from "../components/forms";
+import PickerItem from "../components/PickerItem";
 import useApi from "../hooks/useApi";
 import ActivityIndicator from "../components/ActivityIndicator";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
+  phone: Yup.string().required().max(10).label("Phone"),
+  userType: Yup.string().required().min(6).label("User Type"),
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  password: Yup.string().required().min(5).label("Password"),
 });
 
 function RegisterScreen() {
   const registerApi = useApi(usersApi.register);
   const loginApi = useApi(authApi.login);
-  const auth = useAuth();
+  //const auth = useAuth();
   const [error, setError] = useState();
 
   const handleSubmit = async (userInfo) => {
+
     const result = await registerApi.request(userInfo);
 
     if (!result.ok) {
@@ -39,11 +44,15 @@ function RegisterScreen() {
       return;
     }
 
+    console.log(result.data);
+
     const { data: authToken } = await loginApi.request(
       userInfo.email,
-      userInfo.password
+      userInfo.password,
+      userInfo.userType
     );
-    auth.logIn(authToken);
+    console.log(authToken);
+    //auth.logIn(authToken);
   };
 
   return (
@@ -51,7 +60,7 @@ function RegisterScreen() {
       <ActivityIndicator visible={registerApi.loading || loginApi.loading} />
       <Screen style={styles.container}>
         <Form
-          initialValues={{ name: "", email: "", password: "" }}
+          initialValues={{ name: "", phone:"" , userType:"" , email: "", password: "" }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
@@ -61,6 +70,20 @@ function RegisterScreen() {
             icon="account"
             name="name"
             placeholder="Name"
+          />
+          <FormField
+            autoCorrect={false}
+            icon="phone"
+            name="phone"
+            keyboardType="number-pad"
+            placeholder="Phone"
+          />
+          <FormPicker
+            items={[{label: "Customer",value:1},{label: "Driver",value:2}]}
+            name="userType"
+            PickerItemComponent={PickerItem}
+            placeholder="User Type"
+            width="50%"
           />
           <FormField
             autoCapitalize="none"
