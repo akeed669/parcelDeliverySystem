@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/parcels")
 public class ParcelController {
 
