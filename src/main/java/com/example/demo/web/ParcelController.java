@@ -61,7 +61,17 @@ public class ParcelController {
             @PathVariable(value = "id") Long id, @RequestBody Parcel parcel) {
 
         int status = parcel.getStatus();
+        String deliveryAgent= parcel.getDeliveryAgent();
         System.out.println("status"+status);
-        return new ResponseEntity<>(parcelService.parcelStatusChange(id, status), HttpStatus.OK);
+        return new ResponseEntity<>(parcelService.parcelStatusChange(id, status,deliveryAgent), HttpStatus.OK);
     }
+    
+//    @PutMapping(value = "/parcel/{id}", produces = "application/json")
+//    public ResponseEntity<Parcel> assignParcelDriver(
+//            @PathVariable(value = "id") Long id, @RequestBody Parcel parcel) {
+//
+//        int status = parcel.getStatus();
+//        System.out.println("status"+status);
+//        return new ResponseEntity<>(parcelService.parcelStatusChange(id, status), HttpStatus.OK);
+//    }
 }

@@ -32,6 +32,9 @@ public class Parcel {
 
     @NotBlank(message = "owner is required")
     private String owner;
+    
+    @NotBlank(message = "owner is required")
+    private String deliveryAgent;
 
     private Date created_At;
     private Date updated_At;
@@ -63,6 +66,15 @@ public class Parcel {
     public String getAddress() {
         return address;
     }
+
+    public String getDeliveryAgent() {
+        return deliveryAgent;
+    }
+
+    public void setDeliveryAgent(String deliveryAgent) {
+        this.deliveryAgent = deliveryAgent;
+    }    
+    
 
     public void setAddress(String address) {
         this.address = address;

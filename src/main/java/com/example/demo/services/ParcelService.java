@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.Customer;
+import com.example.demo.entities.Driver;
 import com.example.demo.entities.Parcel;
 import com.example.demo.exceptions.ParcelNotFoundException;
 import com.example.demo.repositories.ClientRepository;
@@ -8,7 +9,6 @@ import com.example.demo.repositories.DriverRepository;
 import com.example.demo.repositories.ParcelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class ParcelService {
@@ -29,7 +29,6 @@ public class ParcelService {
         return parcelRepository.save(parcel);
     }
 
-
     public Parcel getParcelByID(Long id) {
 
         Parcel parcel = parcelRepository.findParcelById(id);
@@ -43,7 +42,6 @@ public class ParcelService {
         return parcelRepository.findAll();
     }
 
-
     public void deleteParcelById(Long id) {
 
         Parcel parcel = getParcelByID(id);
@@ -53,15 +51,32 @@ public class ParcelService {
     }
 
     //Use 1 - 3 numbers to represent parcel status
-    public Parcel parcelStatusChange(Long id, int status) {
+    public Parcel parcelStatusChange(Long id, int status, String deliveryAgent) {
 
         Parcel parcel = getParcelByID(id);
         if (parcel != null) {
             parcel.setStatus(status);
+            parcel.setDeliveryAgent(deliveryAgent); 
+            Driver driver = driverRepository.findByEmail(deliveryAgent);
+            parcel.setDriver(driver);
+
             Parcel updatedParcel = parcelRepository.save(parcel);
             return updatedParcel;
         } else {
             return null;
         }
     }
+
+//     //Use 1 - 3 numbers to represent parcel status
+//    public Parcel parcelDriverAssignment(Long id, Driver driver) {
+//
+//        Parcel parcel = getParcelByID(id);
+//        if (parcel != null) {
+//            parcel.setDriver(driver);
+//            Parcel updatedParcel = parcelRepository.save(parcel);
+//            return updatedParcel;
+//        } else {
+//            return null;
+//        }
+//    }
 }
