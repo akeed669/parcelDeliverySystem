@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   render() {
-
+    //implement toast messages
     const { fullname, email, accountType } = this.state;
 
     return (

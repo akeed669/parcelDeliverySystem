@@ -56,10 +56,10 @@ class OrdersTable extends Component {
     key: "completed",
     content: (order) => (
       <button
-        onClick={() => this.props.onDelete(order)}
+        onClick={() => this.props.onAccept(order)}
         className="btn btn-success btn-sm"
       >
-        Completed
+        Accept
       </button>
     ),
   };

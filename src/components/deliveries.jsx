@@ -6,7 +6,7 @@ import OrdersTable from "./ordersTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import SearchBox from "./common/searchBox";
-import { getOrders, deleteOrder } from "../services/orderService";
+import { getOrders, deleteOrder, saveOrder, updateParcelStatus } from "../services/orderService";
 import auth from "../services/authService";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
@@ -31,7 +31,7 @@ class Deliveries extends Component {
       orders = orders.filter((o) => o.owner === uemail);
     }
 
-    //console.log(orders);
+    console.log(typeof orders[0]);
 
     this.setState({ orders });
 
@@ -44,6 +44,25 @@ class Deliveries extends Component {
 
     try {
       await deleteOrder(order.id);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast.error("This order has already been deleted.");
+
+      this.setState({ orders: originalOrders });
+    }
+  };
+
+  handleAccept = async (order) => {
+
+    let myOrder={...order};
+    myOrder.status=1;
+
+    const originalOrders = this.state.orders;
+    const orders = originalOrders.filter((o) => o.id !== order.id);
+    this.setState({ orders });
+
+    try {
+      await updateParcelStatus(myOrder);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         toast.error("This order has already been deleted.");
@@ -130,6 +149,7 @@ class Deliveries extends Component {
             orders={orders}
             sortColumn={sortColumn}
             onDelete={this.handleDelete}
+            onAccept={this.handleAccept}
             onSort={this.handleSort}
           />
           <Pagination
