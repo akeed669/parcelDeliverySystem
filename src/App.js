@@ -26,15 +26,11 @@ class App extends Component {
 
   componentDidMount() {
     const userObjectString = auth.getCurrentUser();
-    //console.log("ponsi" + userObjectString)
+
     if(userObjectString !== null){
 
       const user=JSON.parse(userObjectString);
-
-      const {fullname,email,accountType}=user
-      // const fullname=user.fullname;
-      // const email=user.email;
-      // const uType=user.accountType;
+      const {fullname,email,accountType}=user;
 
       this.setState({fullname:fullname, email:email, accountType:accountType });
     }

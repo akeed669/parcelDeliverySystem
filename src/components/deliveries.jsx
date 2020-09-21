@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
+
 import OrdersTable from "./ordersTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import SearchBox from "./common/searchBox";
 import { getOrders, deleteOrder } from "../services/orderService";
+import auth from "../services/authService";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 
@@ -29,7 +31,7 @@ class Deliveries extends Component {
       orders = orders.filter((o) => o.owner === uemail);
     }
 
-    console.log(orders);
+    //console.log(orders);
 
     this.setState({ orders });
 
@@ -100,6 +102,7 @@ class Deliveries extends Component {
   }
 
   render() {
+      if (!auth.getCurrentUser()) return <Redirect to="/login" />;
     const { length: count } = this.state.orders;
     const { pageSize, currentPage, searchQuery, sortColumn } = this.state;
     const { user } = this.props;
@@ -111,8 +114,8 @@ class Deliveries extends Component {
 
     return (
       <div className="row">
-        <div className="col">
-          {user && (
+        {user && (<div className="col">
+
             <Link
               to="parcels/new"
               className="btn btn-primary"
@@ -120,7 +123,7 @@ class Deliveries extends Component {
             >
               New Order
             </Link>
-          )}
+
           <p>Showing {totalCount} orders in the database.</p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <OrdersTable
@@ -136,6 +139,7 @@ class Deliveries extends Component {
             onPageChange={this.handlePageChange}
           />
         </div>
+        )}
       </div>
     );
   }

@@ -37,45 +37,8 @@ class OrdersTable extends Component {
   //       </button>
   //     ),
   //   },
-  {
-    key: "completed",
-    content: (order) => (
-      <button
-        onClick={() => this.props.onDelete(order)}
-        className="btn btn-success btn-sm"
-      >
-        Completed
-      </button>
-    ),
-  },
 
-  {
-    key: "delete",
-    content: (order) => (
-      <button
-        onClick={() => this.props.onDelete(order)}
-        className="btn btn-danger btn-sm"
-      >
-        Delete
-      </button>
-    ),
-  }
-
-  ];
-
-  // completedColumn = {
-  //   key: "completed",
-  //   content: (order) => (
-  //     <button
-  //       onClick={() => this.props.onDelete(order)}
-  //       className="btn btn-success btn-sm"
-  //     >
-  //       Completed
-  //     </button>
-  //   ),
-  // };
-  //
-  // deleteColumn = {
+  // {
   //   key: "delete",
   //   content: (order) => (
   //     <button
@@ -85,12 +48,41 @@ class OrdersTable extends Component {
   //       Delete
   //     </button>
   //   ),
-  // };
+  // }
+
+  ];
+
+  acceptColumn = {
+    key: "completed",
+    content: (order) => (
+      <button
+        onClick={() => this.props.onDelete(order)}
+        className="btn btn-success btn-sm"
+      >
+        Completed
+      </button>
+    ),
+  };
+
+  deleteColumn = {
+    key: "delete",
+    content: (order) => (
+      <button
+        onClick={() => this.props.onDelete(order)}
+        className="btn btn-danger btn-sm"
+      >
+        Delete
+      </button>
+    ),
+  };
 
   constructor() {
     super();
-    const user = auth.getCurrentUser();
-    if (user && user.isAdmin) this.columns.push(this.deleteColumn);
+    const userString = auth.getCurrentUser();
+    const user=JSON.parse(userString);
+    console.log(typeof user)
+    if (user && user.accountType==="customer") this.columns.push(this.deleteColumn);
+    if (user && user.accountType==="driver") this.columns.push(this.acceptColumn);
   }
 
   render() {
