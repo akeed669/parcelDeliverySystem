@@ -56,9 +56,14 @@ class App extends Component {
       render={(props) => <OrderForm {...props} email={email} />}
       />
 
-      <Route
+      <ProtectedRoute
       path="/deliveries"
-      render={(props) => <Deliveries {...props} user={fullname} uemail={email} uType={accountType} />}
+      render={(props) => <Deliveries {...props} user={fullname} uemail={email} uType={accountType} driverProfile={false}/>}
+      />
+
+      <ProtectedRoute
+      path="/profile"
+      render={(props) => <Deliveries {...props} user={fullname} uemail={email} uType={accountType} driverProfile={true} />}
       />
 
       <Route path="/customers" component={Customers} />

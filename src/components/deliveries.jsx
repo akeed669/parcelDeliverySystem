@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import OrdersTable from "./ordersTable";
@@ -21,17 +21,9 @@ class Deliveries extends Component {
   };
 
   async componentDidMount() {
-    //const { data } = await getGenres();
-    //const genres = [{ _id: "", name: "All Genres" }, ...data];
 
     let { data: orders } = await getOrders();
-    const {uemail,uType,user}=this.props;
-
-    if(uType==="customer"){
-      orders = orders.filter((o) => o.owner === uemail);
-    }
-
-    //console.log(typeof orders[0]);
+    const {uemail,uType,user,driverProfile}=this.props; 
 
     this.setState({ orders });
 
@@ -55,7 +47,9 @@ class Deliveries extends Component {
   handleAccept = async (order) => {
 
     let myOrder={...order};
+
     myOrder.status=1;
+    myOrder.deliveryAgent=this.props.uemail;
 
     const originalOrders = this.state.orders;
     const orders = originalOrders.filter((o) => o.id !== order.id);
@@ -67,25 +61,13 @@ class Deliveries extends Component {
       if (ex.response && ex.response.status === 404)
         toast.error("This order has already been deleted.");
 
-      this.setState({ orders: originalOrders });
+        this.setState({ orders: originalOrders });
     }
   };
-
-  //   handleLike = (movie) => {
-  //     const orders = [...this.state.orders];
-  //     const index = orders.indexOf(movie);
-  //     orders[index] = { ...orders[index] };
-  //     orders[index].liked = !orders[index].liked;
-  //     this.setState({ orders });
-  //   };
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
-
-  //   handleGenreSelect = (genre) => {
-  //     this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
-  //   };
 
   handleSearch = (query) => {
     this.setState({ searchQuery: query, currentPage: 1 });
@@ -121,11 +103,10 @@ class Deliveries extends Component {
   }
 
   render() {
-      if (!auth.getCurrentUser()) return <Redirect to="/login" />;
     const { length: count } = this.state.orders;
     const { pageSize, currentPage, searchQuery, sortColumn } = this.state;
 
-    const {uemail,uType,user}=this.props;
+    const {uemail,uType,user,driverProfile}=this.props;
     // if (count === 0) return <p>There are no orders in the database.</p>;
 
     const { totalCount, data: orders } = this.getPagedData();
@@ -150,6 +131,7 @@ class Deliveries extends Component {
             onDelete={this.handleDelete}
             onAccept={this.handleAccept}
             onSort={this.handleSort}
+            showDriverOrders={driverProfile}
           />
           <Pagination
             itemsCount={totalCount}

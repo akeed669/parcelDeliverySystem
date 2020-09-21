@@ -16,9 +16,9 @@ export function getOrders() {
 }
 
 export function getOrder(orderId) {
-  console.log(orderUrl(orderId));
+  //console.log(orderUrl(orderId));
   const tit=http.get(orderUrl(orderId));
-  console.log(tit);
+  //console.log(tit);
   return tit;
 }
 

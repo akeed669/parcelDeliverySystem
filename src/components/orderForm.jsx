@@ -17,6 +17,7 @@ class OrderForm extends Form {
     description: Joi.string().required().label("Description"),
     owner:Joi.string(),
     state:Joi.number(),
+    deliveryAgent:Joi.string(),
     weight: Joi.number()
       .required()
       .min(0)
@@ -48,6 +49,7 @@ class OrderForm extends Form {
     let data = { ...this.state.data };
     data.owner=email;
     data.state=0;
+    data.deliveryAgent="Unassigned"
 
     this.setState({data});
     //this.setState({parcelOwner:email, parcelState:3});
