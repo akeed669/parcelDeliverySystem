@@ -25,13 +25,13 @@ class Deliveries extends Component {
     //const genres = [{ _id: "", name: "All Genres" }, ...data];
 
     let { data: orders } = await getOrders();
-    const {uemail,uType}=this.props;
+    const {uemail,uType,user}=this.props;
 
     if(uType==="customer"){
       orders = orders.filter((o) => o.owner === uemail);
     }
 
-    console.log(typeof orders[0]);
+    //console.log(typeof orders[0]);
 
     this.setState({ orders });
 
@@ -124,24 +124,23 @@ class Deliveries extends Component {
       if (!auth.getCurrentUser()) return <Redirect to="/login" />;
     const { length: count } = this.state.orders;
     const { pageSize, currentPage, searchQuery, sortColumn } = this.state;
-    const { user } = this.props;
 
+    const {uemail,uType,user}=this.props;
     // if (count === 0) return <p>There are no orders in the database.</p>;
 
     const { totalCount, data: orders } = this.getPagedData();
-    //console.log(orders)
 
     return (
       <div className="row">
         {user && (<div className="col">
 
-            <Link
+            {uType==="customer" && (<Link
               to="parcels/new"
               className="btn btn-primary"
               style={{ marginBottom: 20 }}
             >
               New Order
-            </Link>
+            </Link>)}
 
           <p>Showing {totalCount} orders in the database.</p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
