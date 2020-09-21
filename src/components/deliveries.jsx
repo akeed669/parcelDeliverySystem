@@ -22,18 +22,24 @@ class Deliveries extends Component {
     //const { data } = await getGenres();
     //const genres = [{ _id: "", name: "All Genres" }, ...data];
 
-    const { data: orders } = await getOrders();
+    const { data: everyOrder } = await getOrders();
+    const {uemail}=this.props;
+    //const myOrders=["d"];
+
+    const orders = everyOrder.filter((o) => o.owner === uemail);
+    console.log(orders);
+
     this.setState({ orders });
 
   }
 
   handleDelete = async (order) => {
     const originalOrders = this.state.orders;
-    const orders = originalOrders.filter((o) => o._id !== order._id);
+    const orders = originalOrders.filter((o) => o.id !== order.id);
     this.setState({ orders });
 
     try {
-      await deleteOrder(order._id);
+      await deleteOrder(order.id);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         toast.error("This order has already been deleted.");
@@ -106,7 +112,7 @@ class Deliveries extends Component {
         <div className="col">
           {user && (
             <Link
-              to="orders/new"
+              to="parcels/new"
               className="btn btn-primary"
               style={{ marginBottom: 20 }}
             >

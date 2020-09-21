@@ -6,7 +6,7 @@ import { getOrder, saveOrder } from "../services/orderService";
 class OrderForm extends Form {
 
   state = {
-    data: { id:"",address: "", destination: "", weight: "", description: "",owner:"",state:0},
+    data: { address: "", destination: "", weight: "", description: ""},
     errors: {}
   };
 
@@ -28,7 +28,7 @@ class OrderForm extends Form {
     try {
       const orderId = this.props.match.params.id;
       if (orderId === "new") return;
-      
+
       const {data:order} = await getOrder(orderId);
       //console.log("jok")
 
@@ -60,14 +60,12 @@ class OrderForm extends Form {
       destination: order.destination,
       description: order.description,
       weight: order.weight,
-      owner:order.owner,
-      state:order.state
     };
   }
 
   doSubmit = async () => {
     await saveOrder(this.state.data);
-    this.props.history.push("/orders");
+    this.props.history.push("/deliveries");
   };
 
   render() {

@@ -31,6 +31,7 @@ class App extends Component {
       const user=JSON.parse(userObjectString);
       const fullname=user.fullname;
       const email=user.email;
+      console.log(user)
 
       this.setState({fullname:fullname, email:email });
     }
@@ -58,7 +59,7 @@ class App extends Component {
 
       <Route
       path="/deliveries"
-      render={(props) => <Deliveries {...props} user={fullname} />}
+      render={(props) => <Deliveries {...props} user={fullname} uemail={email} />}
       />
 
       <Route path="/customers" component={Customers} />
