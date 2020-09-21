@@ -16,30 +16,28 @@ class OrdersTable extends Component {
     { path: "description", label: "Description" },
     { path: "weight", label: "Weight" },
 
-    {
-      content: (order) => (
-        <button
-          onClick={() => this.props.onDelete(order)}
-          className="btn btn-success btn-sm"
-        >
-          Completed
-        </button>
-      ),
-    },
-
-    {
-      content: (order) => (
-        <button
-          onClick={() => this.props.onDelete(order)}
-          className="btn btn-danger btn-sm"
-        >
-          Delete
-        </button>
-      ),
-    },
-  ];
-
-  completedColumn = {
+  //   {
+  //     content: (order) => (
+  //       <button
+  //         onClick={() => this.props.onDelete(order)}
+  //         className="btn btn-success btn-sm"
+  //       >
+  //         Completed
+  //       </button>
+  //     ),
+  //   },
+  //
+  //   {
+  //     content: (order) => (
+  //       <button
+  //         onClick={() => this.props.onDelete(order)}
+  //         className="btn btn-danger btn-sm"
+  //       >
+  //         Delete
+  //       </button>
+  //     ),
+  //   },
+  {
     key: "completed",
     content: (order) => (
       <button
@@ -49,9 +47,9 @@ class OrdersTable extends Component {
         Completed
       </button>
     ),
-  };
+  },
 
-  deleteColumn = {
+  {
     key: "delete",
     content: (order) => (
       <button
@@ -61,7 +59,33 @@ class OrdersTable extends Component {
         Delete
       </button>
     ),
-  };
+  }
+
+  ];
+
+  // completedColumn = {
+  //   key: "completed",
+  //   content: (order) => (
+  //     <button
+  //       onClick={() => this.props.onDelete(order)}
+  //       className="btn btn-success btn-sm"
+  //     >
+  //       Completed
+  //     </button>
+  //   ),
+  // };
+  //
+  // deleteColumn = {
+  //   key: "delete",
+  //   content: (order) => (
+  //     <button
+  //       onClick={() => this.props.onDelete(order)}
+  //       className="btn btn-danger btn-sm"
+  //     >
+  //       Delete
+  //     </button>
+  //   ),
+  // };
 
   constructor() {
     super();
@@ -71,7 +95,7 @@ class OrdersTable extends Component {
 
   render() {
     const { orders, sortColumn, onSort } = this.props;
-    console.log(orders)
+    //console.log(orders)
     return (
       <Table
         columns={this.columns}

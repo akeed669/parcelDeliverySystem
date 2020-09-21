@@ -12,14 +12,15 @@ export function getOrders() {
 }
 
 export function getOrder(orderId) {
+  console.log(orderUrl(orderId))
   return http.get(orderUrl(orderId));
 }
 
 export function saveOrder(order) {
-  if (order._id) {
+  if (order.id) {
     const body = { ...order };
-    delete body._id;
-    return http.put(orderUrl(order._id), body);
+    delete body.id;
+    return http.put(orderUrl(order.id), body);
   }
 
   return http.post(apiEndpoint, order);

@@ -1,17 +1,17 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { getOrders, saveOrder } from "../services/orderService";
+import { getOrder, saveOrder } from "../services/orderService";
 
 class OrderForm extends Form {
 
   state = {
-    data: { address: "", destination: "", weight: "", description: ""},
+    data: { id:"",address: "", destination: "", weight: "", description: "",owner:"",state:0},
     errors: {}
   };
 
   schema = {
-    _id: Joi.string(),
+    id: Joi.string(),
     address: Joi.string().required().label("Address"),
     destination: Joi.string().required().label("Destination"),
     description: Joi.string().required().label("Description"),
@@ -28,9 +28,10 @@ class OrderForm extends Form {
     try {
       const orderId = this.props.match.params.id;
       if (orderId === "new") return;
+      
+      const {data:order} = await getOrder(orderId);
+      //console.log("jok")
 
-      const {data:order} = await getOrders(orderId);
-      //console.log(order)
       this.setState({ data: this.mapToViewModel(order)});
 
     } catch (ex) {
@@ -41,12 +42,12 @@ class OrderForm extends Form {
 
   async componentDidMount() {
     await this.populateMovie();
-    const { email } = this.props;
+    //console.log("yay")
 
+    const { email } = this.props;
     let data = { ...this.state.data };
     data.owner=email;
-    data.state=0
-
+    data.state=0;
 
     this.setState({data});
     //this.setState({parcelOwner:email, parcelState:3});
@@ -59,12 +60,14 @@ class OrderForm extends Form {
       destination: order.destination,
       description: order.description,
       weight: order.weight,
+      owner:order.owner,
+      state:order.state
     };
   }
 
   doSubmit = async () => {
     await saveOrder(this.state.data);
-    //this.props.history.push("/orders");
+    this.props.history.push("/orders");
   };
 
   render() {
