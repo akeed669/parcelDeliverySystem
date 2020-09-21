@@ -33,11 +33,9 @@ function ListingsScreen({ navigation }) {
           keyExtractor={(listing) => listing.id.toString()}
           renderItem={({ item }) => (
             <Card
-              title={item.title}
-              subTitle={"$" + item.price}
-              imageUrl={item.images[0].url}
+              destination={item.destination}
+              weight={item.weight + " kg"}
               onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
-              thumbnailUrl={item.images[0].thumbnailUrl}
             />
           )}
         />
