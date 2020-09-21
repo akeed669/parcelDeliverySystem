@@ -96,8 +96,8 @@ class OrdersTable extends Component {
 
 
     if (user && user.accountType==="customer") this.columns.push(this.deleteColumn);
-    if (user && user.accountType==="driver" && showDriverOrders===false) this.columns.push(this.acceptColumn);
-    if (user && user.accountType==="driver" && showDriverOrders===true) this.columns.push(this.cancelColumn);
+    if (user && user.accountType==="driver" && !showDriverOrders) this.columns.push(this.acceptColumn);
+    if (user && user.accountType==="driver" && showDriverOrders) this.columns.push(this.cancelColumn);
   }
 
   render() {

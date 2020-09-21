@@ -32,17 +32,11 @@ const NavBar = ({ user }) => {
           )}
           {user && (
             <React.Fragment>
-              <NavLink className="nav-item nav-link" to="/movies">
-                Orders
-              </NavLink>
-              {/* <NavLink className="nav-item nav-link" to="/customers">
-                Customers
-              </NavLink> */}
-              {/* <NavLink className="nav-item nav-link" to="/rentals">
-                Rentals
-              </NavLink> */}
+              <NavLink className="nav-item nav-link" to="/deliveries">
+                New Orders
+              </NavLink>            
               <NavLink className="nav-item nav-link" to="/profile">
-                {user}
+                {user + " - Profile"}
               </NavLink>
               <NavLink className="nav-item nav-link" to="/logout">
                 Logout
