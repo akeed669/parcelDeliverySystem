@@ -65,16 +65,22 @@ const tokenKey = "token";
 http.setJwt(getJwt());
 
 export async function login(email, password,uType) {
+
+  let accountType="";
+
   if(uType==="customer"){
     apiEndpoint += "/clients/login";
+    accountType=uType;
   }
   else if (uType==="driver"){
     apiEndpoint += "/drivers/login";
+    accountType=uType;
   }
   const response  = await http.post(apiEndpoint, { email, password });
   // console.log(response)
   // console.log(response.data)
   // console.log(response.data.fullname)
+  response.data.accountType=accountType
   localStorage.setItem(tokenKey, JSON.stringify(response.data));
 }
 

@@ -22,11 +22,13 @@ class Deliveries extends Component {
     //const { data } = await getGenres();
     //const genres = [{ _id: "", name: "All Genres" }, ...data];
 
-    const { data: everyOrder } = await getOrders();
-    const {uemail}=this.props;
-    //const myOrders=["d"];
+    let { data: orders } = await getOrders();
+    const {uemail,uType}=this.props;
 
-    const orders = everyOrder.filter((o) => o.owner === uemail);
+    if(uType==="customer"){
+      orders = orders.filter((o) => o.owner === uemail);
+    }
+
     console.log(orders);
 
     this.setState({ orders });

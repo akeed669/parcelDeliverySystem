@@ -20,7 +20,8 @@ import ProtectedRoute from "./components/common/protectedRoute";
 class App extends Component {
   state = {
     fullname:"",
-    email:""
+    email:"",
+    accountType:""
   };
 
   componentDidMount() {
@@ -29,18 +30,20 @@ class App extends Component {
     if(userObjectString !== null){
 
       const user=JSON.parse(userObjectString);
-      const fullname=user.fullname;
-      const email=user.email;
-      console.log(user)
 
-      this.setState({fullname:fullname, email:email });
+      const {fullname,email,accountType}=user
+      // const fullname=user.fullname;
+      // const email=user.email;
+      // const uType=user.accountType;
+
+      this.setState({fullname:fullname, email:email, accountType:accountType });
     }
     //this.setState({ userObjectString });
   }
 
   render() {
 
-    const { fullname, email } = this.state;
+    const { fullname, email, accountType } = this.state;
 
     return (
       <React.Fragment>
@@ -59,7 +62,7 @@ class App extends Component {
 
       <Route
       path="/deliveries"
-      render={(props) => <Deliveries {...props} user={fullname} uemail={email} />}
+      render={(props) => <Deliveries {...props} user={fullname} uemail={email} uType={accountType} />}
       />
 
       <Route path="/customers" component={Customers} />
