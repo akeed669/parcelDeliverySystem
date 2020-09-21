@@ -1,35 +1,36 @@
 import * as SecureStore from "expo-secure-store";
-import jwtDecode from "jwt-decode";
+// import jwtDecode from "jwt-decode";
 
-const key = "authToken";
+const key = "userObj";
 
-const storeToken = async (authToken) => {
+const storeUser = async (userObj) => {
   try {
-    await SecureStore.setItemAsync(key, authToken);
+    await SecureStore.setItemAsync(key, userObj);
   } catch (error) {
-    console.log("Error storing the auth token", error);
-  }
-};
-
-const getToken = async () => {
-  try {
-    return await SecureStore.getItemAsync(key);
-  } catch (error) {
-    console.log("Error getting the auth token", error);
+    console.log("Error storing the user object", error);
   }
 };
 
 const getUser = async () => {
-  const token = await getToken();
-  return token ? jwtDecode(token) : null;
-};
-
-const removeToken = async () => {
   try {
-    await SecureStore.deleteItemAsync(key);
+    return await SecureStore.getItemAsync(key);
   } catch (error) {
-    console.log("Error removing the auth token", error);
+    console.log("Error getting the user object", error);
+    return null;
   }
 };
 
-export default { getToken, getUser, removeToken, storeToken };
+// const getUser = async () => {
+//   const token = await getToken();
+//   return token ? jwtDecode(token) : null;
+// };
+
+const removeUser = async () => {
+  try {
+    await SecureStore.deleteItemAsync(key);
+  } catch (error) {
+    console.log("Error removing the user object", error);
+  }
+};
+
+export default { getUser, removeUser, storeUser };
