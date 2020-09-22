@@ -7,7 +7,6 @@ import {
   Keyboard,
 } from "react-native";
 
-
 import colors from "../config/colors";
 import ContactSellerForm from "../components/ContactSellerForm";
 import ListItem from "../components/lists/ListItem";

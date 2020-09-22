@@ -29,6 +29,7 @@ function LoginScreen(props) {
     const result = await authApi.login(email, password, userType);
     if (!result.ok) return setLoginFailed(true);
     setLoginFailed(false);
+    result.data.userType=userType.label;
     auth.logIn(result.data);
     console.log(result.data);
   };

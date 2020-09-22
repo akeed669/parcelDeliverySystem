@@ -9,16 +9,20 @@ import NewListingButton from "./NewListingButton";
 import routes from "./routes";
 import navigation from "./rootNavigation";
 import useNotifications from "../hooks/useNotifications";
+import useAuth from "../auth/useAuth";
 
 const Tab = createBottomTabNavigator();
 
-const AppNavigator = () => {
+function AppNavigator () {
+
+  const { user } = useAuth();
+  const footerLeftText = user.userType==="Driver" ? "New Orders":"My Orders";
   useNotifications();
 
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Feed"
+        name={footerLeftText}
         component={FeedNavigator}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -26,7 +30,7 @@ const AppNavigator = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {user.userType==="Customer" && (<Tab.Screen
         name="ListingEdit"
         component={ListingEditScreen}
         options={({ navigation }) => ({
@@ -43,7 +47,7 @@ const AppNavigator = () => {
             />
           ),
         })}
-      />
+      />)}
       <Tab.Screen
         name="Account"
         component={AccountNavigator}
