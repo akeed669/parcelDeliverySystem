@@ -15,28 +15,17 @@ import useAuth from "../auth/useAuth";
 function ListingsScreen({ navigation }) {
   const { user } = useAuth();
   const getListingsApi = useApi(listingsApi.getListings);
-  //console.log(getListingsApi.data)
+
   let allOrders=getListingsApi.data;
 
-
   let ordersCopy=[...allOrders];
-
-  //if the user is a customer, he is only allowed to see his own orders
-  if(user.userType==="Customer"){
-    allOrders = allOrders.filter((o) => o.owner === user.email);
-  }
 
 
   if(user.userType==="Driver"){
 
-    //filtering only the orders which are not yet assigned to any driver
-    allOrders = allOrders.filter((o) => o.deliveryAgent === "Unassigned");
+    //filtering only those orders that have been already accepted by the logged in driver
+    ordersCopy = ordersCopy.filter((o) => o.deliveryAgent === user.email);
 
-
-    // filtering only those orders that have been already accepted by the logged in driver
-    // if(showDriverOrders){
-    //   ordersCopy = ordersCopy.filter((o) => o.deliveryAgent === user.email);
-    // }
    }
 
   useEffect(() => {
@@ -54,7 +43,7 @@ function ListingsScreen({ navigation }) {
           </>
         )}
         <FlatList
-          data={allOrders}
+          data={ordersCopy}
           keyExtractor={(listing) => listing.id.toString()}
           renderItem={({ item }) => (
             <Card

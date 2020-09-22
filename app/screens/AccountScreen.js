@@ -9,21 +9,21 @@ import Screen from "../components/Screen";
 import useAuth from "../auth/useAuth";
 
 const menuItems = [
+  // {
+  //   title: "My Listings",
+  //   icon: {
+  //     name: "format-list-bulleted",
+  //     backgroundColor: colors.primary,
+  //   },
+  //   targetScreen: routes.LISTINGS,
+  // },
   {
-    title: "My Listings",
+    title: "My Jobs",
     icon: {
       name: "format-list-bulleted",
-      backgroundColor: colors.primary,
-    },
-    targetScreen: routes.LISTINGS,
-  },
-  {
-    title: "My Messages",
-    icon: {
-      name: "email",
       backgroundColor: colors.secondary,
     },
-    targetScreen: routes.MESSAGES,
+    targetScreen: routes.USER_LISTINGS,
   },
 ];
 
@@ -39,7 +39,7 @@ function AccountScreen({ navigation }) {
           image={require("../assets/avatar.png")}
         />
       </View>
-      <View style={styles.container}>
+      {user.userType==="Driver" &&(<View style={styles.container}>
         <FlatList
           data={menuItems}
           keyExtractor={(menuItem) => menuItem.title}
@@ -57,7 +57,7 @@ function AccountScreen({ navigation }) {
             />
           )}
         />
-      </View>
+      </View>)}
       <ListItem
         title="Log Out"
         IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
