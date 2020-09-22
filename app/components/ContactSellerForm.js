@@ -1,28 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { Alert, Keyboard } from "react-native";
 import { Notifications } from "expo";
 import * as Yup from "yup";
 
 import { Form, FormField, SubmitButton } from "./forms";
+import UploadScreen from "../screens/UploadScreen";
+import listingsApi from "../api/listings";
 import messagesApi from "../api/messages";
+import useAuth from "../auth/useAuth";
 
 function ContactSellerForm({ listing }) {
+  //console.log(listing);
+  const [uploadVisible, setUploadVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const { user } = useAuth();
+
   const handleSubmit = async ({ message }, { resetForm }) => {
     Keyboard.dismiss();
 
-    const result = await messagesApi.send(message, listing.id);
+    let myOrder={...listing};
+
+    myOrder.status=1;
+    myOrder.deliveryAgent=user.email;
+
+    setProgress(0);
+    setUploadVisible(true);
+
+    // const originalOrders = this.state.orders;
+    // const orders = originalOrders.filter((o) => o.id !== order.id);
+    // this.setState({ orders });
+
+    const result = await listingsApi.updateParcelStatus(myOrder,
+      (progress) => setProgress(progress)
+    );
 
     if (!result.ok) {
-      console.log("Error", result);
-      return Alert.alert("Error", "Could not send the message to the seller.");
+      return Alert.alert("Error", "Could not update the listing.");
     }
 
     resetForm();
 
-    Notifications.presentLocalNotificationAsync({
-      title: "Awesome!",
-      body: "Your message was sent to the seller.",
-    });
+    return Alert.alert("Success", "You have successfully accepted the order!");
+
+    // Notifications.presentLocalNotificationAsync({
+    //   title: "Awesome!",
+    //   body: "Your balls are so big.",
+    // });
   };
 
   return (
@@ -36,15 +59,16 @@ function ContactSellerForm({ listing }) {
         multiline
         name="message"
         numberOfLines={3}
-        placeholder="Message..."
+        placeholder="Hi Seller..."
       />
-      <SubmitButton title="Contact Seller" />
+      <SubmitButton title="Send Message" />
+      <SubmitButton title="Accept Order" color="secondary" />
     </Form>
   );
 }
 
 const validationSchema = Yup.object().shape({
-  message: Yup.string().required().min(1).label("Message"),
+  //message: Yup.string().required().min(1).label("Message"),
 });
 
 export default ContactSellerForm;

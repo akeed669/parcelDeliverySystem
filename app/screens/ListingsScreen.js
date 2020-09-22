@@ -32,11 +32,6 @@ function ListingsScreen({ navigation }) {
     //filtering only the orders which are not yet assigned to any driver
     allOrders = allOrders.filter((o) => o.deliveryAgent === "Unassigned");
 
-
-    // filtering only those orders that have been already accepted by the logged in driver
-    // if(showDriverOrders){
-    //   ordersCopy = ordersCopy.filter((o) => o.deliveryAgent === user.email);
-    // }
    }
 
   useEffect(() => {
