@@ -30,7 +30,8 @@ function AppNavigator () {
           ),
         }}
       />
-      {user.userType==="Customer" && (<Tab.Screen
+      {user.userType==="Customer" && (
+        <Tab.Screen
         name="ListingEdit"
         component={ListingEditScreen}
         options={({ navigation }) => ({

@@ -8,8 +8,9 @@ import UploadScreen from "../screens/UploadScreen";
 import listingsApi from "../api/listings";
 import messagesApi from "../api/messages";
 import useAuth from "../auth/useAuth";
+import routes from "../navigation/routes";
 
-function ContactSellerForm({ listing }) {
+function DriverTasksForm({ navigation, listing }) {
   //console.log(listing);
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -38,14 +39,11 @@ function ContactSellerForm({ listing }) {
       return Alert.alert("Error", "Could not update the listing.");
     }
 
-    resetForm();
-
     return Alert.alert("Success", "You have successfully accepted the order!");
+    navigation.push(routes.USER_LISTINGS)
 
-    // Notifications.presentLocalNotificationAsync({
-    //   title: "Awesome!",
-    //   body: "Your balls are so big.",
-    // });
+    //resetForm();
+
   };
 
   return (
@@ -71,4 +69,4 @@ const validationSchema = Yup.object().shape({
   //message: Yup.string().required().min(1).label("Message"),
 });
 
-export default ContactSellerForm;
+export default DriverTasksForm;

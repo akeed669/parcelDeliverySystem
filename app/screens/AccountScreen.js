@@ -8,15 +8,7 @@ import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import useAuth from "../auth/useAuth";
 
-const menuItems = [
-  // {
-  //   title: "My Listings",
-  //   icon: {
-  //     name: "format-list-bulleted",
-  //     backgroundColor: colors.primary,
-  //   },
-  //   targetScreen: routes.LISTINGS,
-  // },
+const menuItems = [  
   {
     title: "My Jobs",
     icon: {

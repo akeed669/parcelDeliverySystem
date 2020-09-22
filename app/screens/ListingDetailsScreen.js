@@ -8,12 +8,15 @@ import {
 } from "react-native";
 
 import colors from "../config/colors";
-import ContactSellerForm from "../components/ContactSellerForm";
+import DriverTasksForm from "../components/DriverTasksForm";
 import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import useAuth from "../auth/useAuth";
 
 function ListingDetailsScreen({ route }) {
+  const { user } = useAuth();
+
   const listing = route.params;
 
   return (
@@ -31,7 +34,7 @@ function ListingDetailsScreen({ route }) {
             subTitle={listing.deliveryAgent}
           />
         </View>
-        <ContactSellerForm listing={listing} />
+        {user.userType==="Driver" &&(<DriverTasksForm listing={listing} />)}
       </View>
     </KeyboardAvoidingView>
   );
