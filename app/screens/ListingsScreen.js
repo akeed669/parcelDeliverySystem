@@ -33,8 +33,9 @@ function ListingsScreen({ navigation }) {
           keyExtractor={(listing) => listing.id.toString()}
           renderItem={({ item }) => (
             <Card
-              destination={item.destination}
-              weight={item.weight + " kg"}
+              destination={"Destination: "+ item.destination}
+              weight={"Weight: "+ item.weight + " kg"}
+              agent={"Driver: "+ item.deliveryAgent}
               onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
             />
           )}

@@ -4,7 +4,7 @@ import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import Text from "./Text";
 import colors from "../config/colors";
 
-function Card({ destination, weight,  onPress, }) {
+function Card({ destination, weight, agent , onPress, }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
@@ -12,10 +12,13 @@ function Card({ destination, weight,  onPress, }) {
           <Text style={styles.destination} numberOfLines={1}>
             {destination}
           </Text>
+          <Text style={styles.destination} numberOfLines={1}>
+            {agent}
+          </Text>
           <Text style={styles.weight} numberOfLines={2}>
             {weight}
           </Text>
-          
+
         </View>
       </View>
     </TouchableWithoutFeedback>

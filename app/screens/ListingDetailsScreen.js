@@ -6,7 +6,7 @@ import {
   Platform,
   Keyboard,
 } from "react-native";
-import { Image } from "react-native-expo-image-cache";
+
 
 import colors from "../config/colors";
 import ContactSellerForm from "../components/ContactSellerForm";
@@ -22,20 +22,14 @@ function ListingDetailsScreen({ route }) {
       behavior="position"
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 100}
     >
-      <Image
-        style={styles.image}
-        preview={{ uri: listing.images[0].thumbnailUrl }}
-        tint="light"
-        uri={listing.images[0].url}
-      />
+
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{listing.title}</Text>
-        <Text style={styles.price}>${listing.price}</Text>
+        <Text style={styles.title}>{listing.destination}</Text>
+        <Text style={styles.price}>{listing.weight}kg</Text>
         <View style={styles.userContainer}>
           <ListItem
-            image={require("../assets/mosh.jpg")}
-            title="Mosh Hamedani"
-            subTitle="5 Listings"
+            title={listing.deliveryAgent}
+            subTitle={listing.deliveryAgent}
           />
         </View>
         <ContactSellerForm listing={listing} />

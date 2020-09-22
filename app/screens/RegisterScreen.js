@@ -78,7 +78,7 @@ function RegisterScreen() {
             keyboardType="number-pad"
             placeholder="Phone"
           />
-          <FormPicker
+          <FormPicker            
             items={[{label: "Customer",value:1},{label: "Driver",value:2}]}
             name="userType"
             PickerItemComponent={PickerItem}
