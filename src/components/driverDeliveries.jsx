@@ -16,7 +16,7 @@ class DriverDeliveries
   state = {
     orders: [],
     currentPage: 1,
-    pageSize: 4,
+    pageSize: 1,
     searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
   };
@@ -66,25 +66,6 @@ class DriverDeliveries
     }
   };
 
-  handleDeliveryConfirm = async (order) => {
-
-    let myOrder={...order};
-
-    myOrder.status=4;
-    myOrder.deliveryAgent=this.props.uemail;
-
-    const originalOrders = this.state.orders;
-    const orders = originalOrders.filter((o) => o.id !== order.id);
-    this.setState({ orders });
-
-    try {
-      await updateParcelStatus(myOrder);
-    } catch (ex) {
-      if (ex.response && ex.response.status === 404)
-        toast.error("This order has already been deleted.");
-        this.setState({ orders: originalOrders });
-    }
-  };
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
@@ -112,9 +93,6 @@ class DriverDeliveries
       filtered = allOrders.filter((o) =>
         o.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    // else if (selectedGenre && selectedGenre._id) {
-    //   filtered = allOrders.filter((m) => m.genre._id === selectedGenre._id);
-    // }
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
@@ -128,6 +106,7 @@ class DriverDeliveries
     const { pageSize, currentPage, searchQuery, sortColumn } = this.state;
 
     const {uemail,uType,user,driverProfile}=this.props;
+
     // if (count === 0) return <p>There are no orders in the database.</p>;
 
     const { totalCount, data: orders } = this.getPagedData();
