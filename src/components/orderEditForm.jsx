@@ -87,11 +87,13 @@ class OrderForm extends Form {
 
     console.log(datacopy);
 
-    if(this.props.uType==="customer"){
-      await saveOrder(datacopy);
-    } else{
-      await updateParcelStatus(datacopy);
-    }
+    await updateParcelStatus(datacopy);
+
+    // if(this.props.uType==="customer"){
+    //   await saveOrder(datacopy);
+    // } else{
+    //   await updateParcelStatus(datacopy);
+    // }
 
     //await saveOrder(datacopy);
 
@@ -119,7 +121,6 @@ class OrderForm extends Form {
         parcelOptionChoices=[{_id:3,name:"Delivered"}];
         break;
     }
-
 
     const parcelStatusForm = this.state.data.status;
 

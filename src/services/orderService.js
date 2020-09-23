@@ -39,6 +39,8 @@ export function updateParcelStatus(order) {
     delete body.id;
 
     const optURI="/parcel"
+    console.log("sally")
+    console.log(body)
     return http.put(parcelUrl(optURI,order.id), body);
   }
 
