@@ -15,7 +15,7 @@ class Deliveries extends Component {
   state = {
     orders: [],
     currentPage: 1,
-    pageSize: 4,
+    pageSize: 10,
     searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
   };
@@ -93,9 +93,6 @@ class Deliveries extends Component {
       filtered = allOrders.filter((o) =>
         o.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    // else if (selectedGenre && selectedGenre._id) {
-    //   filtered = allOrders.filter((m) => m.genre._id === selectedGenre._id);
-    // }
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 

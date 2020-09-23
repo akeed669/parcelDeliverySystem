@@ -70,7 +70,7 @@ class App extends Component {
 
       <ProtectedRoute
       path="/profile"
-      render={(props) => <DriverDeliveries {...props} user={fullname} uemail={email} uType={accountType} driverProfile={true} />}
+      render={(props) => <Deliveries {...props} user={fullname} uemail={email} uType={accountType} driverProfile={true}/>}
       />
 
       <Route path="/customers" component={Customers} />

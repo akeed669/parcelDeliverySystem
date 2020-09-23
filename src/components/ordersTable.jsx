@@ -73,14 +73,15 @@ class OrdersTable extends Component {
 
     if(user.accountType==="driver"){
 
-      //filtering only the orders which are not yet assigned to any driver
-      allOrders = allOrders.filter((o) => o.deliveryAgent === "Unassigned");
-
-
-      //filtering only those orders that have been already accepted by the logged in driver
+        //filtering only those orders that have been already accepted by the logged in driver
       if(showDriverOrders){
         ordersCopy = ordersCopy.filter((o) => o.deliveryAgent === user.email);
+
+      }else {        
+        //filtering only the orders which are not yet assigned to any driver
+        allOrders = allOrders.filter((o) => o.deliveryAgent === "Unassigned");
       }
+
     }
 
 

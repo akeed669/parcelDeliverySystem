@@ -8,10 +8,8 @@ const NavBar = ({ user, uType }) => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link className="navbar-brand" to="/">
-        Delivered
-      </Link>
 
+      <h4 className="nav item nav-header">ParcelBox</h4>
 
       <button
         className="navbar-toggler"
@@ -26,6 +24,21 @@ const NavBar = ({ user, uType }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <div className="navbar-nav">
+          {user && (
+            <React.Fragment>
+            <h4 className="nav-item nav-header">{user}</h4>
+              <NavLink className="nav-item nav-link" to="/deliveries">
+                {textForTabOne}
+              </NavLink>
+
+              {uType==="driver" &&(<NavLink className="nav-item nav-link" to="/profile">
+                {user + " - Profile"}
+              </NavLink>)}
+              <NavLink className="nav-item nav-link" to="/logout">
+                Logout
+              </NavLink>
+            </React.Fragment>
+          )}
           {!user && (
             <React.Fragment>
               <NavLink className="nav-item nav-link" to="/login">
@@ -36,19 +49,7 @@ const NavBar = ({ user, uType }) => {
               </NavLink>
             </React.Fragment>
           )}
-          {user && (
-            <React.Fragment>
-              <NavLink className="nav-item nav-link" to="/deliveries">
-                {textForTabOne}
-              </NavLink>
-              <NavLink className="nav-item nav-link" to="/profile">
-                {user + " - Profile"}
-              </NavLink>
-              <NavLink className="nav-item nav-link" to="/logout">
-                Logout
-              </NavLink>
-            </React.Fragment>
-          )}
+
         </div>
       </div>
     </nav>
