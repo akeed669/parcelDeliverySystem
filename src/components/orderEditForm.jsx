@@ -7,6 +7,7 @@ class OrderForm extends Form {
 
   state = {
     data: { address: "", destination: "", weight: "", description: ""},
+    parcelStatusState:0,
     errors: {}
   };
 
@@ -47,6 +48,9 @@ class OrderForm extends Form {
 
   async componentDidMount() {
     await this.populateMovie();
+
+    const nmo=this.state.data.status;
+    this.setState({parcelStatusState:nmo});
     // console.log(this.state.data)
     //
     // // const { email } = this.props;
@@ -96,11 +100,30 @@ class OrderForm extends Form {
 
   render() {
 
-    const parcelStatus = this.state.data.status;
+    const previousParcelStatusDB= this.state.parcelStatusState;
 
-    console.log(parcelStatus)
+    let parcelOptionChoices=[];
 
-    const disableEdit = ((parcelStatus==0?false:true)||(this.props.uType==="customer"?false:true));
+    const parcelOptionsArray=[{_id:1,name:"Assigned"},{_id:2,name:"Picked Up"},{_id:3,name:"Delivered"}]
+
+    switch(previousParcelStatusDB){
+      case 0:
+        parcelOptionChoices=parcelOptionsArray;
+        break;
+
+      case 1:
+        parcelOptionChoices=[{_id:2,name:"Picked Up"},{_id:3,name:"Delivered"}];
+        break;
+
+      case 2:
+        parcelOptionChoices=[{_id:3,name:"Delivered"}];
+        break;
+    }
+
+
+    const parcelStatusForm = this.state.data.status;
+
+    const disableEdit = ((parcelStatusForm==0?false:true)||(this.props.uType==="customer"?false:true));
 
     return (
       <div>
@@ -110,7 +133,7 @@ class OrderForm extends Form {
           {this.renderInput("destination", "Destination","text",disableEdit)}
           {this.renderInput("weight", "Weight","text",disableEdit)}
           {this.renderInput("description", "Description","text",disableEdit)}
-          {this.renderSelect("status", "Order Status",[{_id:0,name:"Unassigned"},{_id:1,name:"Assigned"},{_id:2,name:"Picked Up"},{_id:3,name:"Delivered"}])}
+          {this.renderSelect("status", "Order Status",parcelOptionChoices)}
           {this.renderButton("Save")}
         </form>
       </div>
