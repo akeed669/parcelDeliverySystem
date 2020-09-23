@@ -63,7 +63,7 @@ public class ParcelController {
         int status = parcel.getStatus();
         String deliveryAgent= parcel.getDeliveryAgent();
         System.out.println("status"+status);
-        return new ResponseEntity<>(parcelService.parcelStatusChange(id, status,deliveryAgent), HttpStatus.OK);
+        return new ResponseEntity<>(parcelService.parcelStatusChange(id, status, deliveryAgent), HttpStatus.OK);
     }
     
 //    @PutMapping(value = "/parcel/{id}", produces = "application/json")
