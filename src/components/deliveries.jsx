@@ -130,8 +130,8 @@ class Deliveries extends Component {
           <OrdersTable
             orders={orders}
             sortColumn={sortColumn}
-            onDelete={this.handleDelete}
             onAccept={this.handleAccept}
+            onDelete={this.handleDelete}
             onSort={this.handleSort}
             showDriverOrders={driverProfile}
           />

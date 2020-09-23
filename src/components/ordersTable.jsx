@@ -7,41 +7,18 @@ class OrdersTable extends Component {
   columns = [
     {
       path: "address",
-      label: "Address",
+      label: "Pickup Location",
       content: (order) => (
         <Link to={`/parcels/${order.id}`}>{order.address}</Link>
       ),
     },
     { path: "destination", label: "Destination" },
     { path: "description", label: "Description" },
-    { path: "weight", label: "Weight" },
+    { path: "weight", label: "Weight (kg)" },
     { path: "status", label: "Parcel Status" },
+    { path: "deliveryAgent", label: "Assigned Driver" },
 
   ];
-
-  acceptColumn = {
-    key: "completed",
-    content: (order) => (
-      <button
-        onClick={() => this.props.onAccept(order)}
-        className="btn btn-success btn-sm"
-      >
-        Accept
-      </button>
-    ),
-  };
-
-  cancelColumn = {
-    key: "canceled",
-    content: (order) => (
-      <button
-        onClick={() => this.props.onAccept(order)}
-        className="btn btn-success btn-sm"
-      >
-        Cancel
-      </button>
-    ),
-  };
 
   deleteColumn = {
     key: "delete",
@@ -55,26 +32,14 @@ class OrdersTable extends Component {
     ),
   };
 
-  confirmDeliveryColumn = {
-    key: "confirmdelivery",
+  acceptColumn = {
+    key: "accept",
     content: (order) => (
       <button
-        onClick={() => this.props.onConfirmDelivery(order)}
-        className="btn btn-success btn-sm"
+        onClick={() => this.props.onAccept(order)}
+        className="btn btn-danger btn-sm"
       >
-        Delivered
-      </button>
-    ),
-  };
-
-  confirmPickupAsDriver = {
-    key: "driverpickup",
-    content: (order) => (
-      <button
-        onClick={() => this.props.onConfirmDelivery(order)}
-        className="btn btn-success btn-sm"
-      >
-        Delivered
+        Accept Order
       </button>
     ),
   };
@@ -85,9 +50,8 @@ class OrdersTable extends Component {
     const user=JSON.parse(userString);
     const {showDriverOrders}=this.props;
 
-
     if (user && user.accountType==="customer") this.columns.push(this.deleteColumn);
-
+    if (user && user.accountType==="driver") this.columns.push(this.acceptColumn);
   }
 
   render() {

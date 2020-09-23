@@ -50,19 +50,7 @@ class OrderForm extends Form {
     await this.populateMovie();
 
     const nmo=this.state.data.status;
-    this.setState({parcelStatusState:nmo});
-    // console.log(this.state.data)
-    //
-    // // const { email } = this.props;
-    // let data = { ...this.state.data };
-    // // data.owner=email;
-    // data.status=0;
-    // data.deliveryAgent="Unassigned"
-    //
-    // console.log(data)
-    //
-    // this.setState({data});
-    // this.setState({parcelOwner:email, parcelState:3});
+    this.setState({parcelStatusState:nmo});    
   }
 
   mapToViewModel(order) {

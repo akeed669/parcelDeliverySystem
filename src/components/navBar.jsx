@@ -2,7 +2,10 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import Input from "./common/input";
 
-const NavBar = ({ user }) => {
+const NavBar = ({ user, uType }) => {
+
+  const textForTabOne = uType==="customer"?"My Orders":"New Orders";
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" to="/">
@@ -36,7 +39,7 @@ const NavBar = ({ user }) => {
           {user && (
             <React.Fragment>
               <NavLink className="nav-item nav-link" to="/deliveries">
-                New Orders
+                {textForTabOne}
               </NavLink>
               <NavLink className="nav-item nav-link" to="/profile">
                 {user + " - Profile"}
