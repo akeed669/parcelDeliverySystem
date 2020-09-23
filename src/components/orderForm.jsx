@@ -1,7 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { getOrder, saveOrder } from "../services/orderService";
+import { getOrder,getOrders, saveOrder } from "../services/orderService";
 
 class OrderForm extends Form {
 
@@ -25,33 +25,10 @@ class OrderForm extends Form {
       .label("Parcel weight")
   };
 
-  async populateMovie() {
-    try {
-      const orderId = this.props.match.params.id;
-      if (orderId === "new") return;
-
-      const {data:order} = await getOrder(orderId);
-      //console.log("jok")
-
-      this.setState({ data: this.mapToViewModel(order)});
-
-    } catch (ex) {
-      if (ex.response && ex.response.status === 404)
-        this.props.history.replace("/not-found");
-    }
-  }
-
   async componentDidMount() {
-    await this.populateMovie();
-    //console.log("yay")
+    //await this.populateMovie();
 
-    const { email } = this.props;
-    let data = { ...this.state.data };
-    data.owner=email;
-    data.state=0;
-    data.deliveryAgent="Unassigned"
 
-    this.setState({data});
     //this.setState({parcelOwner:email, parcelState:3});
   }
 
@@ -66,7 +43,19 @@ class OrderForm extends Form {
   }
 
   doSubmit = async () => {
-    await saveOrder(this.state.data);
+
+    const { email } = this.props;
+    let data = { ...this.state.data };
+    console.log("johnny")
+
+    data.owner=email;
+    data.state=0;
+    data.deliveryAgent="Unassigned"
+
+    this.setState({data});
+    console.log(data)
+
+    await saveOrder(data);
     this.props.history.push("/deliveries");
   };
 

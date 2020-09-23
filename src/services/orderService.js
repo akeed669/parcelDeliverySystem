@@ -16,14 +16,15 @@ export function getOrders() {
 }
 
 export function getOrder(orderId) {
-  //console.log(orderUrl(orderId));
-  const tit=http.get(orderUrl(orderId));
-  //console.log(tit);
-  return tit;
+
+  return http.get(orderUrl(orderId));
 }
 
 export function saveOrder(order) {
   if (order.id) {
+    console.log("jojooo")
+    console.log(order)
+
     const body = { ...order };
     delete body.id;
     return http.put(orderUrl(order.id), body);

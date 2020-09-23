@@ -12,12 +12,11 @@ axios.interceptors.response.use(null, error => {
     logger.log(error);
     toast.error("An unexpected error occured.");
   }
-
   return Promise.reject(error);
 });
 
 function setJwt(jwt) {
-  axios.defaults.headers.common["x-auth-token"] = jwt;
+  //axios.defaults.headers.common["x-auth-token"] = jwt;
 }
 
 export default {

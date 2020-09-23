@@ -3,7 +3,9 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import Deliveries from "./components/deliveries";
+import DriverDeliveries from "./components/driverDeliveries";
 import OrderForm from "./components/orderForm";
+import OrderEditForm from "./components/orderEditForm";
 import Customers from "./components/customers";
 import NotFound from "./components/notFound";
 import NavBar from "./components/navBar";
@@ -52,8 +54,13 @@ class App extends Component {
       <Route path="/logout" component={Logout} />
 
       <ProtectedRoute
-      path="/parcels/:id"
+      path="/parcels/new"
       render={(props) => <OrderForm {...props} email={email} />}
+      />
+
+      <ProtectedRoute
+      path="/parcels/:id"
+      render={(props) => <OrderEditForm {...props} email={email} />}
       />
 
       <ProtectedRoute
@@ -63,7 +70,7 @@ class App extends Component {
 
       <ProtectedRoute
       path="/profile"
-      render={(props) => <Deliveries {...props} user={fullname} uemail={email} uType={accountType} driverProfile={true} />}
+      render={(props) => <DriverDeliveries {...props} user={fullname} uemail={email} uType={accountType} driverProfile={true} />}
       />
 
       <Route path="/customers" component={Customers} />

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import Input from "./common/input";
 
 const NavBar = ({ user }) => {
   return (
@@ -7,6 +8,8 @@ const NavBar = ({ user }) => {
       <Link className="navbar-brand" to="/">
         Delivered
       </Link>
+
+
       <button
         className="navbar-toggler"
         type="button"
@@ -34,7 +37,7 @@ const NavBar = ({ user }) => {
             <React.Fragment>
               <NavLink className="nav-item nav-link" to="/deliveries">
                 New Orders
-              </NavLink>            
+              </NavLink>
               <NavLink className="nav-item nav-link" to="/profile">
                 {user + " - Profile"}
               </NavLink>

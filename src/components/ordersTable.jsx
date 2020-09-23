@@ -88,6 +88,30 @@ class OrdersTable extends Component {
     ),
   };
 
+  confirmDeliveryColumn = {
+    key: "confirmdelivery",
+    content: (order) => (
+      <button
+        onClick={() => this.props.onConfirmDelivery(order)}
+        className="btn btn-success btn-sm"
+      >
+        Delivered
+      </button>
+    ),
+  };
+
+  confirmPickupAsDriver = {
+    key: "driverpickup",
+    content: (order) => (
+      <button
+        onClick={() => this.props.onConfirmDelivery(order)}
+        className="btn btn-success btn-sm"
+      >
+        Delivered
+      </button>
+    ),
+  };
+
   constructor(props) {
     super(props);
     const userString = auth.getCurrentUser();
@@ -98,6 +122,7 @@ class OrdersTable extends Component {
     if (user && user.accountType==="customer") this.columns.push(this.deleteColumn);
     if (user && user.accountType==="driver" && !showDriverOrders) this.columns.push(this.acceptColumn);
     if (user && user.accountType==="driver" && showDriverOrders) this.columns.push(this.cancelColumn);
+    if (user && user.accountType==="driver" && showDriverOrders) this.columns.push(this.confirmDeliveryColumn);
   }
 
   render() {
@@ -109,15 +134,13 @@ class OrdersTable extends Component {
 
     let {orders:allOrders} = this.props;
     let ordersCopy=[...allOrders];
-    console.log(user)
-    console.log(allOrders)
+    // console.log(user)
+    // console.log(allOrders)
 
     //if the user is a customer, he is only allowed to see his own orders
     if(user.accountType==="customer"){
       allOrders = allOrders.filter((o) => o.owner === user.email);
     }
-
-
 
     if(user.accountType==="driver"){
 

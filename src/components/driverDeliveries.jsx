@@ -11,7 +11,8 @@ import auth from "../services/authService";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 
-class Deliveries extends Component {
+class DriverDeliveries
+ extends Component {
   state = {
     orders: [],
     currentPage: 1,
@@ -23,8 +24,6 @@ class Deliveries extends Component {
   async componentDidMount() {
 
     let { data: orders } = await getOrders();
-    //console.log("weightssss")
-    //console.log(orders)
     const {uemail,uType,user,driverProfile}=this.props;
 
     this.setState({ orders });
@@ -63,6 +62,26 @@ class Deliveries extends Component {
       if (ex.response && ex.response.status === 404)
         toast.error("This order has already been deleted.");
 
+        this.setState({ orders: originalOrders });
+    }
+  };
+
+  handleDeliveryConfirm = async (order) => {
+
+    let myOrder={...order};
+
+    myOrder.status=4;
+    myOrder.deliveryAgent=this.props.uemail;
+
+    const originalOrders = this.state.orders;
+    const orders = originalOrders.filter((o) => o.id !== order.id);
+    this.setState({ orders });
+
+    try {
+      await updateParcelStatus(myOrder);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast.error("This order has already been deleted.");
         this.setState({ orders: originalOrders });
     }
   };
@@ -132,6 +151,7 @@ class Deliveries extends Component {
             sortColumn={sortColumn}
             onDelete={this.handleDelete}
             onAccept={this.handleAccept}
+            onConfirmDelivery={this.handleDeliveryConfirm}
             onSort={this.handleSort}
             showDriverOrders={driverProfile}
           />
@@ -148,4 +168,5 @@ class Deliveries extends Component {
   }
 }
 
-export default Deliveries;
+export default DriverDeliveries
+;

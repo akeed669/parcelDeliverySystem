@@ -12,6 +12,7 @@ class Form extends Component {
   validate = () => {
     const options = { abortEarly: false };
     const { error } = Joi.validate(this.state.data, this.schema, options);
+
     if (!error) return null;
 
     const errors = {};
@@ -42,7 +43,7 @@ class Form extends Component {
     else delete errors[input.name];
 
     const data = { ...this.state.data };
-
+    //console.log(data)
     data[input.name] = input.value;
 
     this.setState({ data, errors });
@@ -56,7 +57,7 @@ class Form extends Component {
     );
   }
 
-  renderInput(name, label, type = "text") {
+  renderInput(name, label,type = "text", disabled=false) {
     const { data, errors } = this.state;
     return (
       <Input
@@ -64,6 +65,7 @@ class Form extends Component {
       name={name}
       value={data[name]}
       label={label}
+      disabled={disabled}
       onChange={this.handleChange}
       error={errors[name]}
       />
