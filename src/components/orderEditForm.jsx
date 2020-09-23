@@ -80,24 +80,37 @@ class OrderForm extends Form {
   doSubmit = async () => {
     let datacopy={...this.state.data};
     datacopy.status=parseInt(datacopy.status);
-    console.log("wesi")
+
     console.log(datacopy);
+
+    if(this.props.uType==="customer"){
+      await saveOrder(datacopy);
+    } else{
+      await updateParcelStatus(datacopy);
+    }
+
     //await saveOrder(datacopy);
-    await updateParcelStatus(datacopy);
+
     this.props.history.push("/deliveries");
   };
 
   render() {
 
+    const parcelStatus = this.state.data.status;
+
+    console.log(parcelStatus)
+
+    const disableEdit = ((parcelStatus==0?false:true)||(this.props.uType==="customer"?false:true));
+
     return (
       <div>
         <h1>Parcel Details</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("address", "Address","text",true)}
-          {this.renderInput("destination", "Destination","text",true)}
-          {this.renderInput("weight", "Weight","text",true)}
-          {this.renderInput("description", "Description","text",true)}
-          {this.renderSelect("status", "Order Status",[{_id:1,name:"Unassigned"},{_id:2,name:"Assigned"},{_id:3,name:"Picked Up"},{_id:4,name:"Delivered"}])}
+          {this.renderInput("address", "Address","text", disableEdit)}
+          {this.renderInput("destination", "Destination","text",disableEdit)}
+          {this.renderInput("weight", "Weight","text",disableEdit)}
+          {this.renderInput("description", "Description","text",disableEdit)}
+          {this.renderSelect("status", "Order Status",[{_id:0,name:"Unassigned"},{_id:1,name:"Assigned"},{_id:2,name:"Picked Up"},{_id:3,name:"Delivered"}])}
           {this.renderButton("Save")}
         </form>
       </div>

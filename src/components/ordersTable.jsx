@@ -15,40 +15,7 @@ class OrdersTable extends Component {
     { path: "destination", label: "Destination" },
     { path: "description", label: "Description" },
     { path: "weight", label: "Weight" },
-
-  //   {
-  //     content: (order) => (
-  //       <button
-  //         onClick={() => this.props.onDelete(order)}
-  //         className="btn btn-success btn-sm"
-  //       >
-  //         Completed
-  //       </button>
-  //     ),
-  //   },
-  //
-  //   {
-  //     content: (order) => (
-  //       <button
-  //         onClick={() => this.props.onDelete(order)}
-  //         className="btn btn-danger btn-sm"
-  //       >
-  //         Delete
-  //       </button>
-  //     ),
-  //   },
-
-  // {
-  //   key: "delete",
-  //   content: (order) => (
-  //     <button
-  //       onClick={() => this.props.onDelete(order)}
-  //       className="btn btn-danger btn-sm"
-  //     >
-  //       Delete
-  //     </button>
-  //   ),
-  // }
+    { path: "status", label: "Parcel Status" },
 
   ];
 
@@ -120,9 +87,7 @@ class OrdersTable extends Component {
 
 
     if (user && user.accountType==="customer") this.columns.push(this.deleteColumn);
-    if (user && user.accountType==="driver" && !showDriverOrders) this.columns.push(this.acceptColumn);
-    if (user && user.accountType==="driver" && showDriverOrders) this.columns.push(this.cancelColumn);
-    if (user && user.accountType==="driver" && showDriverOrders) this.columns.push(this.confirmDeliveryColumn);
+
   }
 
   render() {

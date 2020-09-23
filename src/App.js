@@ -60,7 +60,7 @@ class App extends Component {
 
       <ProtectedRoute
       path="/parcels/:id"
-      render={(props) => <OrderEditForm {...props} email={email} />}
+      render={(props) => <OrderEditForm {...props} email={email} uType={accountType} />}
       />
 
       <ProtectedRoute
