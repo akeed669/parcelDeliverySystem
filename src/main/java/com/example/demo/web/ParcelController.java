@@ -62,9 +62,16 @@ public class ParcelController {
 
         int status = parcel.getStatus();
         String deliveryAgent= parcel.getDeliveryAgent();
-        System.out.println("status"+status);
-        return new ResponseEntity<>(parcelService.parcelStatusChange(id, status, deliveryAgent), HttpStatus.OK);
+        String newAddress= parcel.getAddress();
+        String newDesc= parcel.getDescription();
+        String newDest= parcel.getDestination();
+        int newWeight= parcel.getWeight();       
+                
+//        System.out.println("status"+status);
+        return new ResponseEntity<>(parcelService.parcelStatusChange(id, status, deliveryAgent, newAddress, newDesc, newDest, newWeight), HttpStatus.OK);
     }
+    
+    
     
 //    @PutMapping(value = "/parcel/{id}", produces = "application/json")
 //    public ResponseEntity<Parcel> assignParcelDriver(

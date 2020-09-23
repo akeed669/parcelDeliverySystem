@@ -51,21 +51,30 @@ public class ParcelService {
     }
 
     //Use 1 - 3 numbers to represent parcel status
-    public Parcel parcelStatusChange(Long id, int status, String deliveryAgent) {
+    public Parcel parcelStatusChange(Long id, int status, String deliveryAgent, String address, String desc, String dest, int weight) {
 
-        Parcel parcel = getParcelByID(id);
-        if (parcel != null) {
-            parcel.setStatus(status);
-            parcel.setDeliveryAgent(deliveryAgent); 
+        Parcel oldParcel = getParcelByID(id);
+        if (oldParcel != null) {
+            
+            oldParcel.setDeliveryAgent(deliveryAgent); 
             Driver driver = driverRepository.findByEmail(deliveryAgent);
-            parcel.setDriver(driver);
+            oldParcel.setDriver(driver);
+            
+            oldParcel.setAddress(address);
+            oldParcel.setDescription(desc);
+            oldParcel.setDestination(dest);
+            oldParcel.setStatus(status);
+            oldParcel.setWeight(weight);
+            
 
-            Parcel updatedParcel = parcelRepository.save(parcel);
+            Parcel updatedParcel = parcelRepository.save(oldParcel);
             return updatedParcel;
         } else {
             return null;
         }
     }
+    
+    
 
 //     //Use 1 - 3 numbers to represent parcel status
 //    public Parcel parcelDriverAssignment(Long id, Driver driver) {
