@@ -5,7 +5,15 @@ const key = "userObj";
 
 const storeUser = async (userObj) => {
   try {
-    await SecureStore.setItemAsync(key, JSON.stringify(userObj));
+    const userForStorage={};
+
+    userForStorage.email=userObj.email;
+    userForStorage.fullname=userObj.fullname;
+    userForStorage.userType=userObj.userType;
+
+    console.log(userForStorage)
+
+    await SecureStore.setItemAsync(key, JSON.stringify(userForStorage));
   } catch (error) {
     console.log("Error storing the user object", error);
   }

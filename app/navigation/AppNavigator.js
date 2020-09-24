@@ -23,7 +23,7 @@ function AppNavigator () {
     <Tab.Navigator initialRouteName={footerLeftText}>
       <Tab.Screen
         name={footerLeftText}
-        component={FeedNavigator}
+        component={FeedNavigator}        
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
