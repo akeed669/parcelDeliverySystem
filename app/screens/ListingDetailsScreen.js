@@ -20,7 +20,7 @@ function ListingDetailsScreen({navigation,route }) {
   const { user } = useAuth();
 
   const listing = route.params.item;
-  console.log(listing)
+  console.log(listing);
 
   return (
     <KeyboardAvoidingView

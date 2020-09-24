@@ -31,7 +31,7 @@ function ListingEditScreen({ route }) {
   const { user } = useAuth();
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
-  const {parcel,isNewRequest} = route.params;
+  const {listing,isNewRequest} = route.params;
 
   let buttonLabel = "";
 
