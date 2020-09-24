@@ -27,27 +27,43 @@ const validationSchema = Yup.object().shape({
 });
 
 
-function ListingEditScreen() {
+function ListingEditScreen({ route }) {
   const { user } = useAuth();
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
+  const {parcel,isNewRequest} = route.params;
+
+  let buttonLabel = "";
+
+  buttonLabel=isNewRequest===true?"Post":"Update Parcel";
+
+  console.log(listing);
 
   const handleSubmit = async (listing, { resetForm }) => {
 
-    listing.owner=user.email;
-    listing.state=0;
-    listing.deliveryAgent="Unassigned";
+    let result={};
+
+    if(isNewRequest){
+      listing.owner=user.email;
+      listing.state=0;
+      listing.deliveryAgent="Unassigned";
+
+      setProgress(0);
+      setUploadVisible(true);
+
+      result = await listingsApi.addListing(
+        { ...listing},
+        (progress) => setProgress(progress)
+      );
+
+    }
+
+    else{
 
 
-    setProgress(0);
-    setUploadVisible(true);
 
-    const result = await listingsApi.addListing(
-      { ...listing},
-      (progress) => setProgress(progress)
-    );
-
-    //console.log(result);
+    }
+    console.log(result);
 
     if (!result.ok) {
       setUploadVisible(false);
@@ -55,6 +71,7 @@ function ListingEditScreen() {
     }
 
     resetForm();
+
   };
 
   return (
@@ -103,7 +120,7 @@ function ListingEditScreen() {
           placeholder="Description"
         />
 
-        <SubmitButton title="Post" />
+        <SubmitButton title={buttonLabel} />
       </Form>
     </Screen>
   );

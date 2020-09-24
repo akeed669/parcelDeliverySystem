@@ -5,7 +5,7 @@ const key = "userObj";
 
 const storeUser = async (userObj) => {
   try {
-    await SecureStore.setItemAsync(key, userObj);
+    await SecureStore.setItemAsync(key, JSON.stringify(userObj));
   } catch (error) {
     console.log("Error storing the user object", error);
   }
@@ -13,7 +13,9 @@ const storeUser = async (userObj) => {
 
 const getUser = async () => {
   try {
-    return await SecureStore.getItemAsync(key);
+    const loggedUser=await SecureStore.getItemAsync(key);
+    return JSON.parse(loggedUser);
+
   } catch (error) {
     console.log("Error getting the user object", error);
     return null;

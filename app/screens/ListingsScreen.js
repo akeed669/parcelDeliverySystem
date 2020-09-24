@@ -56,6 +56,7 @@ function ListingsScreen({ navigation }) {
               destination={"Destination: "+ item.destination}
               weight={"Weight: "+ item.weight + " kg"}
               agent={"Driver: "+ item.deliveryAgent}
+              deliveryStatus={"Delivery Status: "+ item.status}
               onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
             />
           )}

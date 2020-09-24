@@ -20,7 +20,7 @@ function AppNavigator () {
   useNotifications();
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName={footerLeftText}>
       <Tab.Screen
         name={footerLeftText}
         component={FeedNavigator}
@@ -37,7 +37,7 @@ function AppNavigator () {
         options={({ navigation }) => ({
           tabBarButton: () => (
             <NewListingButton
-              onPress={() => navigation.navigate(routes.LISTING_EDIT)}
+              onPress={() => navigation.navigate(routes.LISTING_EDIT,{isNewRequest:true})}
             />
           ),
           tabBarIcon: ({ color, size }) => (

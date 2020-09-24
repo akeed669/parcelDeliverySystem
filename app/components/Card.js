@@ -4,16 +4,19 @@ import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import Text from "./Text";
 import colors from "../config/colors";
 
-function Card({ destination, weight, agent , onPress, }) {
+function Card({ destination, weight, agent , deliveryStatus, onPress, }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
         <View style={styles.detailsContainer}>
-          <Text style={styles.destination} numberOfLines={1}>
+          <Text style={styles.parcelDetails} numberOfLines={1}>
             {destination}
           </Text>
-          <Text style={styles.destination} numberOfLines={1}>
+          <Text style={styles.parcelDetails} numberOfLines={1}>
             {agent}
+          </Text>
+          <Text style={styles.parcelDetails} numberOfLines={2}>
+            {deliveryStatus}
           </Text>
           <Text style={styles.weight} numberOfLines={2}>
             {weight}
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontWeight: "bold",
   },
-  destination: {
+  parcelDetails: {
     marginBottom: 7,
   },
 });
