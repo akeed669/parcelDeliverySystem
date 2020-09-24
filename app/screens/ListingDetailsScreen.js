@@ -19,8 +19,8 @@ import useAuth from "../auth/useAuth";
 function ListingDetailsScreen({navigation,route }) {
   const { user } = useAuth();
 
-  const listing = route.params.item;
-  console.log(listing);
+  const listing = route.params;
+  //console.log(listing);
 
   return (
     <KeyboardAvoidingView

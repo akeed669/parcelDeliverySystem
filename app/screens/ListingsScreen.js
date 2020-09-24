@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { FlatList, StyleSheet } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 
 import ActivityIndicator from "../components/ActivityIndicator";
 import Button from "../components/Button";
@@ -13,11 +14,11 @@ import useApi from "../hooks/useApi";
 import useAuth from "../auth/useAuth";
 
 function ListingsScreen({ navigation }) {
+  const isFocused=useIsFocused();
   const { user } = useAuth();
   const getListingsApi = useApi(listingsApi.getListings);
-  //console.log(getListingsApi.data)
-  let allOrders=getListingsApi.data;
 
+  let allOrders=getListingsApi.data;
 
   let ordersCopy=[...allOrders];
 
@@ -36,7 +37,7 @@ function ListingsScreen({ navigation }) {
 
   useEffect(() => {
     getListingsApi.request();
-  }, []);
+  }, [isFocused]);
 
   return (
     <>

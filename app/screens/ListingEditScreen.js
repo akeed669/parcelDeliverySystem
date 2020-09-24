@@ -13,6 +13,7 @@ import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import UploadScreen from "./UploadScreen";
 import listingsApi from "../api/listings";
+import routes from "../navigation/routes";
 import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
@@ -27,29 +28,29 @@ const validationSchema = Yup.object().shape({
 });
 
 
-function ListingEditScreen({ route }) {
+function ListingEditScreen({ navigation,route }) {
   const { user } = useAuth();
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
   const {listing,isNewRequest} = route.params;
 
+  const oldParcel={...listing};
+
   let buttonLabel = "";
 
   buttonLabel=isNewRequest===true?"Post":"Update Parcel";
-
-  console.log(listing);
 
   const handleSubmit = async (listing, { resetForm }) => {
 
     let result={};
 
+    setProgress(0);
+    setUploadVisible(true);
+
     if(isNewRequest){
       listing.owner=user.email;
       listing.state=0;
       listing.deliveryAgent="Unassigned";
-
-      setProgress(0);
-      setUploadVisible(true);
 
       result = await listingsApi.addListing(
         { ...listing},
@@ -59,18 +60,24 @@ function ListingEditScreen({ route }) {
     }
 
     else{
+      console.log(listing);
+      oldParcel.address=listing.address;
+      oldParcel.description=listing.description;
+      oldParcel.destination=listing.destination;
+      oldParcel.weight=listing.weight;
 
-
-
+      result = await listingsApi.updateParcelStatus(
+        { ...oldParcel},
+        (progress) => setProgress(progress)
+      );
     }
-    console.log(result);
 
     if (!result.ok) {
       setUploadVisible(false);
       return alert("Could not save the listing");
     }
 
-    resetForm();
+    navigation.navigate(routes.LISTINGS)
 
   };
 

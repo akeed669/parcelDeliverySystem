@@ -31,55 +31,6 @@ export const updateParcelStatus = (listing, onUploadProgress) => {
 }
 
 
-
-
-//
-// export const updateParcelStatus=(listing, onUploadProgress) => {
-//   const data = {};
-//
-//   data.destination= listing.destination;
-//   data.address= listing.address;
-//   data.weight= listing.weight;
-//   data.description= listing.description;
-//   data.owner= listing.owner;
-//   data.status= listing.state;
-//   data.deliveryAgent= listing.deliveryAgent;
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//   if (order.id) {
-//     const body = { ...order };
-//     delete body.id;
-//
-//     const optURI="/parcel"
-//     return http.put(parcelUrl(optURI,order.id), body);
-//   }
-//
-//   return http.post(apiEndpoint, order);
-// }
-
-
-
-
-
-
-
-
-
-
-
 export default {
   addListing,
   getListings,
