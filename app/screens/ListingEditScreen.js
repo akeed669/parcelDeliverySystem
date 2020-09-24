@@ -77,7 +77,8 @@ function ListingEditScreen({ navigation,route }) {
       return alert("Could not save the listing");
     }
 
-    navigation.navigate(routes.LISTINGS)
+    if(!isNewRequest){navigation.navigate(routes.LISTINGS)}
+    else{navigation.navigate(routes.LISTING_DETAILS)}
 
   };
 

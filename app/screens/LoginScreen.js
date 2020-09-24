@@ -31,7 +31,7 @@ function LoginScreen(props) {
     setLoginFailed(false);
     result.data.userType=userType.label;
     auth.logIn(result.data);
-    //console.log(result.data);
+    
   };
 
   return (
