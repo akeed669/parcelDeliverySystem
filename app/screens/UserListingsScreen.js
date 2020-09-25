@@ -24,7 +24,7 @@ function ListingsScreen({ navigation }) {
   if(user.userType==="Driver"){
 
     //filtering only those orders that have been already accepted by the logged in driver
-    ordersCopy = ordersCopy.filter((o) => o.deliveryAgent === user.email);
+    ordersCopy = ordersCopy.filter((o) => o.deliveryAgent === user.email && o.status===1);
 
    }
 

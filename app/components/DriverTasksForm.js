@@ -53,7 +53,7 @@ function DriverTasksForm({ navigation, listing }) {
       validationSchema={validationSchema}
     >
 
-      <SubmitButton title="Accept Order" color="secondary" />
+    <SubmitButton title="Accept Order" color="secondary" />
     </Form>
   );
 }
