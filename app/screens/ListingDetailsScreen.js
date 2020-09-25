@@ -19,7 +19,7 @@ import useAuth from "../auth/useAuth";
 function ListingDetailsScreen({navigation,route }) {
   const { user } = useAuth();
 
-  const listing = route.params;  
+  const listing = route.params;
 
   return (
     <KeyboardAvoidingView
@@ -37,7 +37,7 @@ function ListingDetailsScreen({navigation,route }) {
             subTitle={listing.deliveryAgent}
           />
         </View>
-        <Button title="Edit Parcel Details" onPress={() => navigation.navigate(routes.LISTING_EDIT, {listing,isNewRequest:false})} />
+        {user.userType==="Customer" &&(<Button title="Edit Parcel Details" onPress={() => navigation.navigate(routes.LISTING_EDIT, {listing,isNewRequest:false})} />)}
         {user.userType==="Driver" &&(<DriverTasksForm listing={listing} />)}
       </View>
     </KeyboardAvoidingView>

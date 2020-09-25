@@ -6,12 +6,11 @@ import * as Yup from "yup";
 import { Form, FormField, SubmitButton } from "./forms";
 import UploadScreen from "../screens/UploadScreen";
 import listingsApi from "../api/listings";
-import messagesApi from "../api/messages";
 import useAuth from "../auth/useAuth";
 import routes from "../navigation/routes";
 
 function DriverTasksForm({ navigation, listing }) {
-  //console.log(listing);
+
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
   const { user } = useAuth();
@@ -36,11 +35,12 @@ function DriverTasksForm({ navigation, listing }) {
     );
 
     if (!result.ok) {
+      setUploadVisible(false);
       return Alert.alert("Error", "Could not update the listing.");
     }
 
-    return Alert.alert("Success", "You have successfully accepted the order!");
-    navigation.push(routes.USER_LISTINGS)
+    Alert.alert("Success", "You have successfully accepted the order!");
+    //navigation.navigate(routes.USER_LISTINGS);
 
     //resetForm();
 
@@ -52,14 +52,7 @@ function DriverTasksForm({ navigation, listing }) {
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
     >
-      <FormField
-        maxLength={255}
-        multiline
-        name="message"
-        numberOfLines={3}
-        placeholder="Hi Seller..."
-      />
-      <SubmitButton title="Send Message" />
+
       <SubmitButton title="Accept Order" color="secondary" />
     </Form>
   );
