@@ -12,6 +12,8 @@ import { paginate } from "../utils/paginate";
 import _ from "lodash";
 
 class Deliveries extends Component {
+  // state variable for storing orders and ..
+  // .. storing page/sort and search query details
   state = {
     orders: [],
     currentPage: 1,
@@ -22,30 +24,37 @@ class Deliveries extends Component {
 
   async componentDidMount() {
 
+    // make api call to get all orders from server
     let { data: orders } = await getOrders();
-    //console.log("weightssss")
-    //console.log(orders)
+
+    //access props passed by parent componentDidMount
+    //user details are received
     const {uemail,uType,user,driverProfile}=this.props;
 
     this.setState({ orders });
 
   }
 
+  // function for deleting an order as customer
   handleDelete = async (order) => {
     const originalOrders = this.state.orders;
     const orders = originalOrders.filter((o) => o.id !== order.id);
+    // orders in DOM are filtered before delete operation
     this.setState({ orders });
 
     try {
+      // make api call to delete order
       await deleteOrder(order.id);
     } catch (ex) {
+      // toast message for exceptions
       if (ex.response && ex.response.status === 404)
         toast.error("This order has already been deleted.");
-
+      // if delete operation fails, orders are reset to previous state
       this.setState({ orders: originalOrders });
     }
   };
 
+ //function to accept order as driver
   handleAccept = async (order) => {
 
     let myOrder={...order};
@@ -55,30 +64,38 @@ class Deliveries extends Component {
 
     const originalOrders = this.state.orders;
     const orders = originalOrders.filter((o) => o.id !== order.id);
+    // orders in DOM are filtered before update operation
     this.setState({ orders });
 
     try {
+      //make api call to update order
       await updateParcelStatus(myOrder);
     } catch (ex) {
+      // toast message for exceptions
       if (ex.response && ex.response.status === 404)
         toast.error("This order has already been deleted.");
-
+        // if update operation fails, orders are reset to previous state
         this.setState({ orders: originalOrders });
     }
   };
 
+ //change displayed page when user clicks on a page number
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
 
+  //method runs when user enters something on search box
   handleSearch = (query) => {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
 
+  //sorts column when user clicks on column header
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
+  //method called when rendering component
+  //returns orders, selected page, sorted column, search query etc.
   getPagedData() {
     const {
       pageSize,
@@ -88,16 +105,19 @@ class Deliveries extends Component {
       orders: allOrders,
     } = this.state;
 
+    // filtering to show orders with name matching search query
     let filtered = allOrders;
     if (searchQuery)
       filtered = allOrders.filter((o) =>
         o.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
 
+    // for ordering data according to selected column
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
+    // using custom function to display page dynamically
     const orders = paginate(sorted, currentPage, pageSize);
-
+    // return orders and number of orders
     return { totalCount: filtered.length, data: orders };
   }
 
@@ -106,7 +126,6 @@ class Deliveries extends Component {
     const { pageSize, currentPage, searchQuery, sortColumn } = this.state;
 
     const {uemail,uType,user,driverProfile}=this.props;
-    // if (count === 0) return <p>There are no orders in the database.</p>;
 
     const { totalCount, data: orders } = this.getPagedData();
 
@@ -123,6 +142,7 @@ class Deliveries extends Component {
             </Link>)}
 
           <p>Showing {totalCount} orders in the database.</p>
+          
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <OrdersTable
             orders={orders}

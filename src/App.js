@@ -6,7 +6,6 @@ import Deliveries from "./components/deliveries";
 import DriverDeliveries from "./components/driverDeliveries";
 import OrderForm from "./components/orderForm";
 import OrderEditForm from "./components/orderEditForm";
-import Customers from "./components/customers";
 import NotFound from "./components/notFound";
 import NavBar from "./components/navBar";
 import LoginForm from "./components/loginForm";
@@ -19,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import ProtectedRoute from "./components/common/protectedRoute";
 
+// set state variables to hold user values
 class App extends Component {
   state = {
     fullname:"",
@@ -27,6 +27,7 @@ class App extends Component {
   };
 
   componentDidMount() {
+    //retrieve current user object from local storage
     const userObjectString = auth.getCurrentUser();
 
     if(userObjectString !== null){
@@ -34,15 +35,19 @@ class App extends Component {
       const user=JSON.parse(userObjectString);
       const {fullname,email,accountType}=user;
 
+      // state variables are set to hold user information
+
       this.setState({fullname:fullname, email:email, accountType:accountType });
     }
-    //this.setState({ userObjectString });
   }
 
   render() {
-    //implement toast messages
+
     const { fullname, email, accountType } = this.state;
 
+    // render Route components to direct to endpoints
+    // ProtectedRoute components requires a user to be logged in
+    // name and type of user passed to navigation bar
     return (
       <React.Fragment>
       <ToastContainer />
@@ -73,7 +78,6 @@ class App extends Component {
       render={(props) => <Deliveries {...props} user={fullname} uemail={email} uType={accountType} driverProfile={true}/>}
       />
 
-      <Route path="/customers" component={Customers} />
       <Route path="/not-found" component={NotFound} />
       <Redirect from="/" exact to="/deliveries" />
       <Redirect to="/not-found" />

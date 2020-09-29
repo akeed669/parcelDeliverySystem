@@ -5,6 +5,8 @@ import * as userService from "../services/userService";
 import auth from "../services/authService";
 
 class RegisterForm extends Form {
+  // state initialised with empty variables
+
   state = {
     data: {
       username: "",
@@ -15,6 +17,7 @@ class RegisterForm extends Form {
     errors: {},
   };
 
+// schema for validating user input using Joi package
 
   schema = {
     username: Joi.string().required().email().label("Username"),
@@ -26,13 +29,16 @@ class RegisterForm extends Form {
 
   doSubmit = async () => {
     try {
+      // register function called with form data
       const response = await userService.register(this.state.data);
-      //auth.loginWithJwt(response.headers["x-auth-token"]);
+      //user type retrieved from server response data
       const {uType}=this.state.data
       response.data.accountType=uType
-  
+
+      // login function called with response data object (needed for local storage)
       auth.loginWithJwt(response.data);
-      //window.location = "/";
+      // user sent to home page
+      window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -42,8 +48,8 @@ class RegisterForm extends Form {
     }
   };
 
-
   render() {
+    // render register page with neccesary components
     return (
       <div>
       <h1>Register</h1>
@@ -59,5 +65,5 @@ class RegisterForm extends Form {
     );
   }
 }
-//<form onSubmit={this.handleSubmit}>
+
 export default RegisterForm;

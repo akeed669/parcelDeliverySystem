@@ -50,12 +50,10 @@ class OrderForm extends Form {
     await this.populateMovie();
 
     const nmo=this.state.data.status;
-    this.setState({parcelStatusState:nmo});    
+    this.setState({parcelStatusState:nmo});
   }
 
-  mapToViewModel(order) {
-    console.log("papapaa")
-    console.log(order)
+  mapToViewModel(order) {  
 
     return {
       id: order.id,

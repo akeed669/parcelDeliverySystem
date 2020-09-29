@@ -1,60 +1,3 @@
-// import jwtDecode from "jwt-decode";
-// import http from "./httpService";
-// import { apiUrl } from "../config.json";
-//
-// let apiEndpoint = apiUrl;
-// const tokenKey = "token";
-//
-// http.setJwt(getJwt());
-//
-// export async function login(email, password, uType) {
-//   if(uType==="customer"){
-//     apiEndpoint += "/clients/login";
-//   }
-//   else if (uType==="driver"){
-//     apiEndpoint += "/drivers/login";
-//   }
-//
-//   const response  = await http.post(apiEndpoint, { email, password });
-//
-//   //console.log(JSON.stringify(response.data))
-//
-//   localStorage.setItem(tokenKey, response);
-// }
-//
-// export function loginWithJwt(userObject) {
-//   localStorage.setItem(tokenKey, userObject);
-// }
-//
-// export function logout(user) {
-//   localStorage.removeItem(tokenKey);
-// }
-//
-// export function getCurrentUser() {
-//   try {
-//     const jwt = localStorage.getItem(tokenKey);
-//
-//     //return jwtDecode(jwt);
-//     return jwt;
-//   } catch (ex) {
-//     return null;
-//   }
-// }
-//
-// export function getJwt() {
-//   return localStorage.getItem(tokenKey);
-// }
-//
-// export default {
-//   login,
-//   loginWithJwt,
-//   logout,
-//   getCurrentUser,
-//   getJwt
-// };
-
-
-
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
 import { apiUrl } from "../config.json";
@@ -62,12 +5,11 @@ import { apiUrl } from "../config.json";
 let apiEndpoint = apiUrl;
 const tokenKey = "token";
 
-http.setJwt(getJwt());
-
 export async function login(email, password,uType) {
 
   let accountType="";
 
+  //check type of user and decide route endpoint
   if(uType==="customer"){
     apiEndpoint += "/clients/login";
     accountType=uType;
@@ -76,35 +18,34 @@ export async function login(email, password,uType) {
     apiEndpoint += "/drivers/login";
     accountType=uType;
   }
+
+  // post the data from login form to api endpoint
   const response  = await http.post(apiEndpoint, { email, password });
-  // console.log(response)
-  // console.log(response.data)
-  // console.log(response.data.fullname)
+  // get the user type from the response object
   response.data.accountType=accountType
+  // set the data received from the server into local storage
   localStorage.setItem(tokenKey, JSON.stringify(response.data));
 }
 
 export function loginWithJwt(userObject) {
-  //console.log(userObject)
+  // setting user object received as parameter in local storage
   localStorage.setItem(tokenKey, JSON.stringify(userObject));
 }
 
 export function logout(user) {
+  // remove the user object from local storage when logging out
   localStorage.removeItem(tokenKey);
 }
 
 export function getCurrentUser() {
   try {
+    //retrieve the user object from local storage
     const jwt = localStorage.getItem(tokenKey);
-    //return jwtDecode(jwt);
+
     return jwt;
   } catch (ex) {
     return null;
   }
-}
-
-export function getJwt() {
-  return localStorage.getItem(tokenKey);
 }
 
 export default {
@@ -112,5 +53,4 @@ export default {
   loginWithJwt,
   logout,
   getCurrentUser,
-  getJwt
 };

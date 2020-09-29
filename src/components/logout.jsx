@@ -3,6 +3,7 @@ import auth from "../services/authService";
 
 class Logout extends Component {
   componentDidMount() {
+    //call function to remove user from local storage
     auth.logout();
     window.location = "/";
   }

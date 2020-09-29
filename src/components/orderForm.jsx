@@ -46,14 +46,12 @@ class OrderForm extends Form {
 
     const { email } = this.props;
     let data = { ...this.state.data };
-    console.log("johnny")
 
     data.owner=email;
     data.state=0;
     data.deliveryAgent="Unassigned"
 
     this.setState({data});
-    console.log(data)
 
     await saveOrder(data);
     this.props.history.push("/deliveries");

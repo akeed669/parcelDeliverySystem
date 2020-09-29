@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Table from "./common/table";
 
 class OrdersTable extends Component {
+
+  // columns for poopulating orders table
   columns = [
     {
       path: "address",
@@ -19,6 +21,8 @@ class OrdersTable extends Component {
     { path: "deliveryAgent", label: "Assigned Driver" },
 
   ];
+
+  // below columns rendered conditionally
 
   deleteColumn = {
     key: "delete",
@@ -46,25 +50,30 @@ class OrdersTable extends Component {
 
   constructor(props) {
     super(props);
+
     const userString = auth.getCurrentUser();
     const user=JSON.parse(userString);
+
     const {showDriverOrders}=this.props;
 
+    // customers get option for deleting orders
     if (user && user.accountType==="customer") this.columns.push(this.deleteColumn);
+
+    // drivers get option for accepting orders
     if (user && user.accountType==="driver") this.columns.push(this.acceptColumn);
   }
 
   render() {
-
+    // current user object retrieved from local storage
     const userString = auth.getCurrentUser();
     const user=JSON.parse(userString);
 
+    // below props are received from parent component
     const { sortColumn, onSort, showDriverOrders } = this.props;
 
+    // all orders received as a prop
     let {orders:allOrders} = this.props;
     let ordersCopy=[...allOrders];
-    // console.log(user)
-    // console.log(allOrders)
 
     //if the user is a customer, he is only allowed to see his own orders
     if(user.accountType==="customer"){
@@ -72,16 +81,14 @@ class OrdersTable extends Component {
     }
 
     if(user.accountType==="driver"){
-
-        //filtering only those orders that have been already accepted by the logged in driver
+      //filtering only those orders that have been already accepted by the logged in driver
       if(showDriverOrders){
         ordersCopy = ordersCopy.filter((o) => o.deliveryAgent === user.email);
 
-      }else {        
+      }else {
         //filtering only the orders which are not yet assigned to any driver
         allOrders = allOrders.filter((o) => o.deliveryAgent === "Unassigned");
       }
-
     }
 
 
