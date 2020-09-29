@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ParcelRepository extends CrudRepository<Parcel, Long> {
 
+    Parcel findByOwner(String owner);
     Parcel findParcelById(Long id);
-
 
 }

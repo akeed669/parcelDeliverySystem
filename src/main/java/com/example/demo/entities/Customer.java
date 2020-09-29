@@ -30,7 +30,7 @@ public class Customer{
     private Date createdAt;
     private Date updatedAt;
 
-//    //OneToMany with Parcel
+    //OneToMany with Parcel
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "customer", orphanRemoval = true)
     private List<Parcel> parcels = new ArrayList<>();
 

@@ -34,7 +34,6 @@ public class Driver {
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "driver", orphanRemoval = true)
     private List<Parcel> parcels = new ArrayList<>();
 
-
     public Driver() {
     }
 

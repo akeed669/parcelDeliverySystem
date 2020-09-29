@@ -26,7 +26,6 @@ public class Parcel {
     @NotNull(message = "weight is required")
     private int weight;
 
-
     @NotNull(message = "Status is required")
     private int status;
 
@@ -38,9 +37,6 @@ public class Parcel {
 
     private Date created_At;
     private Date updated_At;
-
-
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
