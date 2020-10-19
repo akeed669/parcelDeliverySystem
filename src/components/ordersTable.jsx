@@ -43,7 +43,7 @@ class OrdersTable extends Component {
         onClick={() => this.props.onAccept(order)}
         className="btn btn-danger btn-sm"
       >
-        Accept Order
+        Accept 
       </button>
     ),
   };
@@ -53,8 +53,6 @@ class OrdersTable extends Component {
 
     const userString = auth.getCurrentUser();
     const user=JSON.parse(userString);
-
-    const {showDriverOrders}=this.props;
 
     // customers get option for deleting orders
     if (user && user.accountType==="customer") this.columns.push(this.deleteColumn);
@@ -69,33 +67,28 @@ class OrdersTable extends Component {
     const user=JSON.parse(userString);
 
     // below props are received from parent component
-    const { sortColumn, onSort, showDriverOrders } = this.props;
+    const { sortColumn, onSort } = this.props;
 
     // all orders received as a prop
     let {orders:allOrders} = this.props;
-    let ordersCopy=[...allOrders];
 
     //if the user is a customer, he is only allowed to see his own orders
     if(user.accountType==="customer"){
       allOrders = allOrders.filter((o) => o.owner === user.email);
     }
 
+    //if the user is a driver, he is only allowed to see his own jobs and unassigned jobs
     if(user.accountType==="driver"){
-      //filtering only those orders that have been already accepted by the logged in driver
-      if(showDriverOrders){
-        ordersCopy = ordersCopy.filter((o) => o.deliveryAgent === user.email);
-
-      }else {
-        //filtering only the orders which are not yet assigned to any driver
-        allOrders = allOrders.filter((o) => o.deliveryAgent === "Unassigned");
-      }
+      allOrders = allOrders.filter((o) => o.deliveryAgent === "Unassigned" || o.deliveryAgent === user.email);
     }
+
+    //console.log(allOrders)
 
 
     return (
       <Table
         columns={this.columns}
-        data={(showDriverOrders && ordersCopy)|| allOrders}
+        data={allOrders}
         sortColumn={sortColumn}
         onSort={onSort}
       />

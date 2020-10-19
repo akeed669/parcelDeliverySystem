@@ -16,25 +16,27 @@ class Deliveries extends Component {
   // .. storing page/sort and search query details
   state = {
     orders: [],
+    views: [],
     currentPage: 1,
-    pageSize: 6,
+    pageSize: 10,
     searchQuery: "",
+    selectedView: null,
     sortColumn: { path: "title", order: "asc" },
   };
 
   async componentDidMount() {
 
+    // array to hold the different view types
+    const viewsArray = [{id:100,viewName:"All"},{id:0,viewName:"New"},{id:1,viewName:"Pending"},{id:2,viewName:"Completed"}];
+
     // make api call to get all orders from server
     let { data: orders } = await getOrders();
-
-    //filtering to show only unassigned parcels
-    const newOrders = orders.filter((o) => o.deliveryAgent === "Unassigned");
 
     //access props passed by parent componentDidMount
     //user details are received
     const {uemail,uType,user,driverProfile}=this.props;
 
-    this.setState({ orders:newOrders });
+    this.setState({ orders, views:viewsArray });
 
   }
 
@@ -89,7 +91,12 @@ class Deliveries extends Component {
 
   //method runs when user enters something on search box
   handleSearch = (query) => {
-    this.setState({ searchQuery: query, currentPage: 1 });
+    this.setState({ searchQuery: query, selectedView: null, currentPage: 1 });
+  };
+
+  //when user selects different view type
+  handleViewSelect = view => {
+    this.setState({ selectedView: view, searchQuery: "", currentPage: 1 });
   };
 
   //sorts column when user clicks on column header
@@ -104,6 +111,7 @@ class Deliveries extends Component {
       pageSize,
       currentPage,
       sortColumn,
+      selectedView,
       searchQuery,
       orders: allOrders,
     } = this.state;
@@ -115,26 +123,51 @@ class Deliveries extends Component {
         o.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
 
+    //filter orders array if particular view type selected
+    else if (selectedView) {
+      if(selectedView.id === 100){
+        filtered = allOrders;
+      }
+      else{
+        filtered = allOrders.filter(m => m.status === selectedView.id);
+      }
+
+    }
+
     // for ordering data according to selected column
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     // using custom function to display page dynamically
     const orders = paginate(sorted, currentPage, pageSize);
+
     // return orders and number of orders
-    return { totalCount: filtered.length, data: orders };
+    return { totalCount: orders.length, data: orders };
   }
 
   render() {
     const { length: count } = this.state.orders;
-    const { pageSize, currentPage, searchQuery, sortColumn } = this.state;
+    const { pageSize, currentPage, searchQuery, sortColumn, views, selectedView } = this.state;
 
     const {uemail,uType,user,driverProfile}=this.props;
 
     const { totalCount, data: orders } = this.getPagedData();
+    console.log(orders)
 
     return (
       <div className="row">
-        {user && (<div className="col">
+        <div className="col-3">
+
+        {/*render the view types as a group - user able to filter*/}
+
+          <ListGroup
+            textProperty="viewName"
+            items={views}
+            selectedItem={selectedView}
+            onItemSelect={this.handleViewSelect}
+          />
+        </div>
+        {user && (
+          <div className="col">
 
             {uType==="customer" && (<Link
               to="parcels/new"
