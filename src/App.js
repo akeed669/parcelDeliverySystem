@@ -75,7 +75,7 @@ class App extends Component {
 
       <ProtectedRoute
       path="/profile"
-      render={(props) => <Deliveries {...props} user={fullname} uemail={email} uType={accountType} driverProfile={true}/>}
+      render={(props) => <DriverDeliveries {...props} user={fullname} uemail={email} uType={accountType} driverProfile={true}/>}
       />
 
       <Route path="/not-found" component={NotFound} />

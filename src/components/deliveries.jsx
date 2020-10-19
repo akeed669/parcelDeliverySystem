@@ -17,7 +17,7 @@ class Deliveries extends Component {
   state = {
     orders: [],
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 6,
     searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
   };
@@ -27,11 +27,14 @@ class Deliveries extends Component {
     // make api call to get all orders from server
     let { data: orders } = await getOrders();
 
+    //filtering to show only unassigned parcels
+    const newOrders = orders.filter((o) => o.deliveryAgent === "Unassigned");
+
     //access props passed by parent componentDidMount
     //user details are received
     const {uemail,uType,user,driverProfile}=this.props;
 
-    this.setState({ orders });
+    this.setState({ orders:newOrders });
 
   }
 
@@ -142,7 +145,7 @@ class Deliveries extends Component {
             </Link>)}
 
           <p>Showing {totalCount} orders in the database.</p>
-          
+
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <OrdersTable
             orders={orders}

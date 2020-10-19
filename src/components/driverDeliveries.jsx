@@ -16,7 +16,7 @@ class DriverDeliveries
   state = {
     orders: [],
     currentPage: 1,
-    pageSize: 1,
+    pageSize: 6,
     searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
   };

@@ -6,7 +6,7 @@ import { getOrder,getOrders, saveOrder, updateParcelStatus } from "../services/o
 class OrderForm extends Form {
 
   state = {
-    data: { address: "", destination: "", weight: "", description: ""},
+    data: { address: "", destination: "", weight: "", description: "", orderStatus:0},
     parcelStatusState:0,
     errors: {}
   };
@@ -35,6 +35,7 @@ class OrderForm extends Form {
 
       for(let i=0;i<data.length;i++){
         if(data[i].id==orderId){
+          console.log(data[i])
           this.setState({ data: this.mapToViewModel(data[i])});
         }
       }
@@ -53,7 +54,7 @@ class OrderForm extends Form {
     this.setState({parcelStatusState:nmo});
   }
 
-  mapToViewModel(order) {  
+  mapToViewModel(order) {
 
     return {
       id: order.id,
@@ -100,11 +101,11 @@ class OrderForm extends Form {
         break;
 
       case 1:
-        parcelOptionChoices=[{_id:2,name:"Picked Up"},{_id:3,name:"Delivered"}];
+        parcelOptionChoices=parcelOptionsArray.slice(1);
         break;
 
       case 2:
-        parcelOptionChoices=[{_id:3,name:"Delivered"}];
+        parcelOptionChoices=parcelOptionsArray.slice(2);
         break;
     }
 

@@ -9,42 +9,31 @@ const NavBar = ({ user, uType }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
 
-      <h4 className="nav item nav-header">ParcelBox</h4>
-
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon" />
-      </button>
       <div className="collapse navbar-collapse" id="navbarNav">
+        <h4 className="nav item nav-header ml-1">ParcelBox</h4>
         <div className="navbar-nav">
           {user && (
             <React.Fragment>
-            <h4 className="nav-item nav-header">{user}</h4>
-              <NavLink className="nav-item nav-link" to="/deliveries">
+
+              <NavLink className="nav-item nav-link ml-3" to="/deliveries">
                 {textForTabOne}
               </NavLink>
 
-              {uType==="driver" &&(<NavLink className="nav-item nav-link" to="/profile">
+              {uType==="driver" &&(<NavLink className="nav-item nav-link ml-3" to="/profile">
                 {user + " - Profile"}
               </NavLink>)}
-              <NavLink className="nav-item nav-link" to="/logout">
+              <NavLink className="nav-item nav-link ml-3" to="/logout">
                 Logout
               </NavLink>
+              {uType==="customer" && (<h4 className="nav-item nav-header ml-3 mt-1">{user}</h4>)}
             </React.Fragment>
           )}
           {!user && (
             <React.Fragment>
-              <NavLink className="nav-item nav-link" to="/login">
+              <NavLink className="nav-item nav-link ml-3" to="/login">
                 Login
               </NavLink>
-              <NavLink className="nav-item nav-link" to="/register">
+              <NavLink className="nav-item nav-link ml-3" to="/register">
                 Register
               </NavLink>
             </React.Fragment>
