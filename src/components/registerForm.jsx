@@ -23,7 +23,7 @@ class RegisterForm extends Form {
     username: Joi.string().required().email().label("Username"),
     password: Joi.string().required().min(5).label("Password"),
     name: Joi.string().required().label("Name"),
-    phoneNumber: Joi.string().required().max(10).label("Phone Number"),
+    phoneNumber: Joi.string().required().max(10).min(10).label("Phone Number"),
     uType:Joi.string().required().max(8).label("User Type"),
   };
 

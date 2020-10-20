@@ -4,7 +4,7 @@ import Input from "./common/input";
 
 const NavBar = ({ user, uType }) => {
 
-  const textForTabOne = uType==="customer"?"My Orders":"New Orders";
+  const textForTabOne = uType==="customer"?"My Orders":"My Jobs";
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -19,9 +19,6 @@ const NavBar = ({ user, uType }) => {
                 {textForTabOne}
               </NavLink>
 
-              {uType==="driver" &&(<NavLink className="nav-item nav-link ml-3" to="/profile">
-                {user + " - Profile"}
-              </NavLink>)}
               <NavLink className="nav-item nav-link ml-3" to="/logout">
                 Logout
               </NavLink>

@@ -93,20 +93,14 @@ class OrderForm extends Form {
 
     let parcelOptionChoices=[];
 
-    const parcelOptionsArray=[{_id:1,name:"Assigned"},{_id:2,name:"Picked Up"},{_id:3,name:"Delivered"}]
+    const parcelOptionsArray=[{_id:0,name:"Assigned"},{_id:1,name:"Picked Up"},{_id:2,name:"Delivered"}]
 
     switch(previousParcelStatusDB){
-      case 0:
-        parcelOptionChoices=parcelOptionsArray;
-        break;
 
       case 1:
-        parcelOptionChoices=parcelOptionsArray.slice(1);
-        break;
-
-      case 2:
         parcelOptionChoices=parcelOptionsArray.slice(2);
         break;
+
     }
 
     const parcelStatusForm = this.state.data.status;
@@ -121,7 +115,7 @@ class OrderForm extends Form {
           {this.renderInput("destination", "Destination","text",disableEdit)}
           {this.renderInput("weight", "Weight","text",disableEdit)}
           {this.renderInput("description", "Description","text",disableEdit)}
-          {this.renderSelect("status", "Order Status",parcelOptionChoices)}
+          {(this.props.uType==="driver" && parcelStatusForm===1) && this.renderSelect("status", "Order Status",parcelOptionChoices)}
           {this.renderButton("Save")}
         </form>
       </div>
