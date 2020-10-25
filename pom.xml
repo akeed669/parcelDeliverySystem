@@ -12,9 +12,9 @@
 	</parent>
 
 	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>parcelDeliverySystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>Parcel Delivery System</name>
 	<description>Parcel delivery system demo</description>
 
 	<properties>
