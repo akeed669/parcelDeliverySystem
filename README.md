@@ -1,7 +1,7 @@
-# Vidly-React
+# Parcel Delivery System
 
-Front end for the vidly-api-node project build using react.
+Combined Front end and Back end for the parcel delivery system built using react and spring boot.
 
-## Acknowledgments
 
-- Props to **Mosh Hamedani** and his course **'REACT'** on **programmingwithmosh.com**
+
+
