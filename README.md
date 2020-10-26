@@ -1,26 +1,37 @@
 # Parcel Delivery System
 
-## A web application developed using React and Spring Boot
+## An integrated application developed using React, React Native and Spring Boot
 
-### Front end 
+### Setting up the projects
 
-Install node modules for React project by executing following commands on the command line:
+Install node modules for all three projects by executing following commands on the command line:
 
 ```sh
 $ cd frontEnd
 $ npm install
+$ cd ./backEnd
+$ npm install
+$ cd ./mobileApp
+$ npm install
 ```
 
-Start the React application on the browser
+## Running the application
+
+### Start the React application on the browser
 
 ```sh
 $ cd frontEnd
 $ npm start
 ```
 
-### Back end
+### Start the React Native mobile application
 
-Run the server using an IDE of your choice after building project
+```sh
+$ cd mobileApp
+$ npm start
+```
+
+### Run the back end server using an IDE of your choice
 
 ### Developed by Akeed Manuideen
 
